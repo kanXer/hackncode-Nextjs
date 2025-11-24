@@ -1,0 +1,130 @@
+/* assets/styles.css */
+
+/* Page wrapper */
+.edit-wrapper {
+  max-width: 900px;
+  margin: 28px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 28px rgba(28, 31, 38, 0.06);
+  font-family: Inter, ui-sans-serif, system-ui;
+  color: #111827;
+}
+
+.edit-wrapper h1 {
+  font-size: 1.6rem;
+  margin-bottom: 18px;
+  font-weight: 600;
+}
+
+/* Form layout */
+.edit-form {
+  display: grid;
+  gap: 14px;
+}
+
+/* Label */
+.edit-form label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+/* Inputs */
+.edit-form input,
+.edit-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e6e9ee;
+  border-radius: 8px;
+  background: #fafafa;
+  font-size: 0.95rem;
+  transition: 0.12s ease;
+}
+
+.edit-form input:focus,
+.edit-form textarea:focus {
+  border-color: #7c3aed;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(132, 34, 238, 0.15);
+}
+
+/* FEATURE PREVIEW */
+.feature-preview-box {
+  width: 160px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.feature-preview-img {
+  width: 160px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  margin-bottom: 6px;
+}
+
+.feature-remove-btn {
+  width: 100%;
+  padding: 6px 12px;
+  background: #ef4444;
+  color: white;
+  font-size: 13px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.feature-remove-btn:hover { background: #dc2626; }
+
+/* GALLERY */
+.gallery-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.gallery-item {
+  width: 84px;
+  text-align: center;
+}
+
+.preview-img-small {
+  width: 84px;
+  height: 84px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 4px;
+}
+
+.remove-btn {
+  width: 100%;
+  padding: 5px 0;
+  background: #ef4444;
+  color: white;
+  font-size: 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+.remove-btn:hover { background: #dc2626; }
+
+/* SAVE BUTTON */
+.save-btn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: linear-gradient(90deg,#6d28d9,#8b5cf6);
+  color: white;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  margin-top: 12px;
+  box-shadow: 0 4px 20px rgba(99,102,241,0.18);
+}
+.save-btn:hover { transform: translateY(-2px); }
+.save-btn:active { transform: scale(0.97); }
