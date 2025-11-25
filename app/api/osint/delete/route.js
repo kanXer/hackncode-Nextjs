@@ -4,26 +4,26 @@ import { Osint } from "@/lib/models/Osint";
 
 export const dynamic = "force-dynamic";
 
-export async function GET(req) {
+export async function POST(req) {
   try {
     await connectDB();
 
-    const id = req.nextUrl.searchParams.get("id");
+    const { id } = await req.json();
 
     if (!id) {
-      return NextResponse.json(
-        { error: "Missing ID" },
-        { status: 400 }
-      );
+      return NextResponse.json({
+        success: false,
+        error: "Missing ID",
+      });
     }
 
     await Osint.findByIdAndDelete(id);
 
     return NextResponse.json({ success: true });
-  } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to delete", details: error.message },
-      { status: 500 }
-    );
+  } catch (err) {
+    return NextResponse.json({
+      success: false,
+      error: err.message,
+    });
   }
 }
