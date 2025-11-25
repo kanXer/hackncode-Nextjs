@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongo";
-import Category from "@/lib/models/Category";
+import { Category } from "@/lib/models/Category";
 
 export const dynamic = "force-dynamic";
 
@@ -26,3 +26,4 @@ export async function POST(req) {
     });
   }
 }
+
