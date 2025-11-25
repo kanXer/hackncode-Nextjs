@@ -99,7 +99,7 @@ export default function AdminDashboard() {
     }
   }
 
-  // NEWS: Handle delete action
+  // NEWS DELETE
   useEffect(() => {
     if (!deleteSlug) return;
 
@@ -123,14 +123,14 @@ export default function AdminDashboard() {
       });
   }, [deleteSlug]);
 
-  // ------- LOAD OSINT LOGS -------
+  // LOAD OSINT LOGS
   useEffect(() => {
     fetch("/api/osint/logs")
       .then((res) => res.json())
       .then((data) => setLogs(data));
   }, []);
 
-  // --------- DELETE OSINT LOG ---------
+  // DELETE LOG
   useEffect(() => {
     if (!deleteLogId) return;
 
@@ -314,12 +314,20 @@ export default function AdminDashboard() {
         ))}
       </div>
 
-      {/* ========= JSON POPUP ========= */}
+      {/* ========= JSON POPUP (NEW DESIGN) ========= */}
       {popupData && (
         <div className="popup-overlay" onClick={() => setPopupData(null)}>
-          <pre className="popup-box">
-            {JSON.stringify(popupData, null, 2)}
-          </pre>
+          <div className="popup-box" onClick={(e) => e.stopPropagation()}>
+            <h3 className="popup-title">JSON Output</h3>
+
+            <div className="popup-content">
+              <pre>{JSON.stringify(popupData, null, 2)}</pre>
+            </div>
+
+            <button className="popup-close" onClick={() => setPopupData(null)}>
+              Close
+            </button>
+          </div>
         </div>
       )}
 
