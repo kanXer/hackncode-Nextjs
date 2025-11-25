@@ -219,6 +219,26 @@
   gap: 8px;
 }
 
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.popup-box {
+  background: #111;
+  color: #0f0;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-height: 80%;
+  overflow: auto;
+  font-size: 13px;
+}
 .btn-edit { background: #22c55e; }
 .btn-delete { background: #ef4444; }
 .btn-view { background: #3b82f6; }
@@ -276,3 +296,4 @@
     gap: 8px;
   }
 }
+
