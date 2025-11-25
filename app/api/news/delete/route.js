@@ -4,32 +4,23 @@ import { News } from "@/lib/models/News";
 
 export const dynamic = "force-dynamic";
 
-export async function GET(req) {
+export async function POST(req) {
   try {
     await connectDB();
 
-    const slug = req.nextUrl.searchParams.get("slug");
+    const { slug } = await req.json();
+
     if (!slug) {
-      return NextResponse.json(
-        { error: "Missing slug" },
-        { status: 400 }
-      );
+      return NextResponse.json({ success: false, error: "Slug missing" });
     }
 
     const deleted = await News.findOneAndDelete({ slug });
 
-    if (!deleted) {
-      return NextResponse.json(
-        { error: "News not found" },
-        { status: 404 }
-      );
-    }
-
-    return NextResponse.json({ success: true, message: "Deleted" });
+    return NextResponse.json({
+      success: !!deleted,
+      message: deleted ? "Deleted" : "Not found",
+    });
   } catch (err) {
-    return NextResponse.json(
-      { error: "Server error", details: err.message },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, error: err.message });
   }
 }
