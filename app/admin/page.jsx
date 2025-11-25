@@ -66,6 +66,7 @@ export default function AdminDashboard() {
 
     const res = await fetch("/api/categories/add", {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ category: newCategory.trim() }),
     });
 
@@ -86,6 +87,7 @@ export default function AdminDashboard() {
 
     const res = await fetch("/api/categories/delete", {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ category: name }),
     });
 
@@ -99,7 +101,7 @@ export default function AdminDashboard() {
     }
   }
 
-  // NEWS DELETE
+  // ------- DELETE NEWS POST -------
   useEffect(() => {
     if (!deleteSlug) return;
 
@@ -110,6 +112,7 @@ export default function AdminDashboard() {
 
     fetch("/api/news/delete", {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ slug: deleteSlug }),
     })
       .then((res) => res.json())
@@ -123,14 +126,14 @@ export default function AdminDashboard() {
       });
   }, [deleteSlug]);
 
-  // LOAD OSINT LOGS
+  // ------- LOAD OSINT LOGS -------
   useEffect(() => {
     fetch("/api/osint/logs")
       .then((res) => res.json())
       .then((data) => setLogs(data));
   }, []);
 
-  // DELETE LOG
+  // ------- DELETE OSINT LOG -------
   useEffect(() => {
     if (!deleteLogId) return;
 
@@ -141,6 +144,7 @@ export default function AdminDashboard() {
 
     fetch("/api/osint/delete", {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: deleteLogId }),
     })
       .then((res) => res.json())
@@ -314,7 +318,7 @@ export default function AdminDashboard() {
         ))}
       </div>
 
-      {/* ========= JSON POPUP (NEW DESIGN) ========= */}
+      {/* ========= JSON POPUP ========= */}
       {popupData && (
         <div className="popup-overlay" onClick={() => setPopupData(null)}>
           <div className="popup-box" onClick={(e) => e.stopPropagation()}>
