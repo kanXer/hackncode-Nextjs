@@ -33,12 +33,10 @@ export default function AdminDashboard() {
   const [deleteSlug, setDeleteSlug] = useState(null);
   const [deleteLogId, setDeleteLogId] = useState(null);
 
-  // CATEGORY
   const [categories, setCategories] = useState([]);
   const [newCategory, setNewCategory] = useState("");
   const [selectedCat, setSelectedCat] = useState("all");
 
-  // OSINT
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
 
@@ -101,11 +99,29 @@ export default function AdminDashboard() {
     }
   }
 
-  // ------- FILTER NEWS -------
-  const filteredNews =
-    selectedCat === "all"
-      ? news
-      : news.filter((item) => item.category === selectedCat);
+  // NEWS: Handle delete action
+  useEffect(() => {
+    if (!deleteSlug) return;
+
+    if (!confirm(`Delete post "${deleteSlug}"?`)) {
+      setDeleteSlug(null);
+      return;
+    }
+
+    fetch("/api/news/delete", {
+      method: "POST",
+      body: JSON.stringify({ slug: deleteSlug }),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success) {
+          setNews((prev) => prev.filter((n) => n.slug !== deleteSlug));
+        } else {
+          alert(json.error);
+        }
+        setDeleteSlug(null);
+      });
+  }, [deleteSlug]);
 
   // ------- LOAD OSINT LOGS -------
   useEffect(() => {
@@ -113,6 +129,35 @@ export default function AdminDashboard() {
       .then((res) => res.json())
       .then((data) => setLogs(data));
   }, []);
+
+  // --------- DELETE OSINT LOG ---------
+  useEffect(() => {
+    if (!deleteLogId) return;
+
+    if (!confirm("Delete this log?")) {
+      setDeleteLogId(null);
+      return;
+    }
+
+    fetch("/api/osint/delete", {
+      method: "POST",
+      body: JSON.stringify({ id: deleteLogId }),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.success) {
+          setLogs((prev) => prev.filter((l) => l._id !== deleteLogId));
+        } else {
+          alert(json.error);
+        }
+        setDeleteLogId(null);
+      });
+  }, [deleteLogId]);
+
+  const filteredNews =
+    selectedCat === "all"
+      ? news
+      : news.filter((item) => item.category === selectedCat);
 
   const filteredLogs = logs.filter((log) => {
     const modeMatch = filter === "all" || log.mode === filter;
@@ -134,7 +179,6 @@ export default function AdminDashboard() {
         <h2 className="block-title">Categories</h2>
 
         <div className="tag-row">
-
           <div className="tag-item-wrapper">
             <button
               className={`tag-item ${
@@ -269,6 +313,15 @@ export default function AdminDashboard() {
           </div>
         ))}
       </div>
+
+      {/* ========= JSON POPUP ========= */}
+      {popupData && (
+        <div className="popup-overlay" onClick={() => setPopupData(null)}>
+          <pre className="popup-box">
+            {JSON.stringify(popupData, null, 2)}
+          </pre>
+        </div>
+      )}
 
     </div>
   );
