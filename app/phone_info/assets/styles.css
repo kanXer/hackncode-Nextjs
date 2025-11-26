@@ -191,6 +191,32 @@ html, body {
   background: var(--accent);
   border-radius: 10px;
 }
+.loader-bar {
+  width: 150px;
+  height: 4px;
+  margin: 0 auto;
+  background: linear-gradient(90deg, #14b866, #0f7a48);
+  animation: loadingAnim 1.2s infinite ease-in-out;
+  border-radius: 5px;
+}
+
+@keyframes loadingAnim {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  50% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  51% {
+    transform-origin: right;
+  }
+  100% {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+}
 
 /* ===========================
    RESPONSIVE
@@ -252,3 +278,4 @@ html, body {
     height: 0.85rem;
   }
 }
+
