@@ -7,7 +7,7 @@ import { connectDB } from "@/lib/mongo";
 import { News } from "@/lib/models/News";
 import NewsFilter from "@/app/components/NewsFilter";
 import NewsCard from "@/app/components/NewsCard";
-
+import "./assets/styles.css"
 
 export const revalidate = 30;
 
@@ -53,4 +53,5 @@ export default async function NewsPage({ searchParams }) {
     </div>
   );
 }
+
 
