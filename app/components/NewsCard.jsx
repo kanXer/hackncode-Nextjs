@@ -7,18 +7,12 @@ export default function NewsCard({ post }) {
   const featureImg = post.feature_image || "/preview.jpg";
 
   /** ----------------------------
-   *  AUTO SANITIZED + FIXED SLUG
+   *  USE DB SLUG DIRECTLY
    *  ---------------------------- */
-  const cleanSlug = (post.slug || "")
-    .toString()
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9\- ]/g, "")     // remove symbols
-    .replace(/\s+/g, "-")             // spaces → hyphens
-    .replace(/-+/g, "-")              // multiple hyphens → single
-    .replace(/^-+|-+$/g, "");         // trim hyphens
-
-  const safeSlug = cleanSlug || "article"; // fallback slug
+  const safeSlug =
+    (post.slug || "").toString().trim() !== ""
+      ? post.slug
+      : "article"; // fallback only if empty
 
 
   /** ----------------------------
@@ -26,9 +20,9 @@ export default function NewsCard({ post }) {
    *  ---------------------------- */
   const sanitizedHTML = DOMPurify.sanitize(
     post.short_description ||
-    post.excerpt ||
-    post.content ||
-    ""
+      post.excerpt ||
+      post.content ||
+      ""
   );
 
   const plainText = sanitizedHTML.replace(/<[^>]*>/g, "");
@@ -55,7 +49,10 @@ export default function NewsCard({ post }) {
 
       <div className="news-body">
         <div>
-          <span className="news-category">{post.category || "General"}</span>
+          <span className="news-category">
+            {post.category || "General"}
+          </span>
+
           <h3 className="news-title">{post.title}</h3>
 
           <p
