@@ -2,6 +2,7 @@ import "./globals.css";
 import LoaderWrapper from "./components/LoaderWrapper";
 import HeaderWrapper from "./components/HeaderWrapper";
 import FooterWrapper from "./components/FooterWrapper";
+import "./news/assets/styles.css";
 import "./components/assets/header.css";
 import "./components/assets/globalLoader.css";
 import './assets/home.css';
@@ -77,3 +78,4 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
