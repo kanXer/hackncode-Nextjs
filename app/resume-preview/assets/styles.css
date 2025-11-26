@@ -11,7 +11,6 @@
 
 /* DARK MODE OVERRIDES */
 body.dark .resume-page {
-  --resume-bg: linear-gradient(145deg, #0a0f0a, #000000);
   --resume-card: rgba(20, 20, 20, 0.9);
   --resume-border: rgba(20, 200, 120, 0.55);
   --resume-text: #e9f6ee;
@@ -228,3 +227,4 @@ body.dark .resume-page .resume-section:hover {
   background: var(--resume-accent);
   box-shadow: 0 3px 12px var(--resume-border);
 }
+
