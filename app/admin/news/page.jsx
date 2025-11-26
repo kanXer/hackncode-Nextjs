@@ -5,13 +5,13 @@ import "./assets/styles.css";
 
 export default function AdminCreateNews() {
   const [loading, setLoading] = useState(false);
-  const [categories, setCategories] = useState([]); // ⭐ DB categories state
+  const [categories, setCategories] = useState([]);
 
-  // Load categories from DB
+  // Load categories
   useEffect(() => {
     fetch("/api/categories/all")
       .then((res) => res.json())
-      .then((data) => setCategories(data)) // data = [{_id,name}]
+      .then((data) => setCategories(data))
       .catch(() => {});
   }, []);
 
@@ -22,6 +22,20 @@ export default function AdminCreateNews() {
     setLoading(true);
 
     const form = new FormData(e.target);
+
+    // ❌ SLUG NOT ALLOWED – remove manually
+    form.delete("slug");
+
+    // If Author Name empty → remove, backend auto-fill
+    if (!form.get("user_name")?.trim()) {
+      form.delete("user_name");
+    }
+
+    // If Author Image empty → remove, backend auto-fill
+    const authorImage = e.target.user_image.files[0];
+    if (!authorImage) {
+      form.delete("user_image");
+    }
 
     const res = await fetch("/api/news/create", {
       method: "POST",
@@ -56,13 +70,10 @@ export default function AdminCreateNews() {
         <label>Title *</label>
         <input type="text" name="title" required />
 
-
-        <label>Slug *</label>
-        <input type="text" name="slug" required />
+        {/* ❌ SLUG REMOVED FROM UI */}
+        {/* No slug field now */}
 
         <label>Category *</label>
-
-        {/* ⭐ CATEGORY DROPDOWN */}
         <select name="category" required className="category-select">
           <option value="">Select Category</option>
 
@@ -79,6 +90,9 @@ export default function AdminCreateNews() {
         <label>Full Content *</label>
         <textarea name="content" required></textarea>
 
+        {/* SHORT DESCRIPTION REMOVED */}
+        {/* No short_description field */}
+
         {/* MEDIA */}
         <div className="section-title">Media</div>
 
@@ -94,14 +108,14 @@ export default function AdminCreateNews() {
         {/* AUTHOR */}
         <div className="section-title">Author</div>
 
-        <label>Author Name *</label>
+        <label>Author Name</label>
         <input
           type="text"
           name="user_name"
-          placeholder="Leave empty for default"
+          placeholder="Leave empty for default admin"
         />
 
-        <label>Author Photo *</label>
+        <label>Author Photo</label>
         <input type="file" name="user_image" />
 
         <button type="submit">
