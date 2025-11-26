@@ -129,7 +129,7 @@ export default function ResumeTour() {
 
             {/* PDF Button */}
             {resumeData.sections[step].id === "thankyou" && (
-              <a href="/sahil.pdf" download className="download-btn">
+              <a href="/Sahil.pdf" download className="download-btn">
                 Download Resume ⬇
               </a>
             )}
@@ -148,4 +148,5 @@ export default function ResumeTour() {
     </div>
   );
 }
+
 
