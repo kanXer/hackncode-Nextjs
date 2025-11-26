@@ -125,14 +125,15 @@
 /* FIX: Exact 4 cards per row on large screens */
 .latest-post-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);   /* 4 items per row */
+  grid-template-columns: repeat(6, 1fr);   /* 4 items per row */
   gap: 16px;
 }
 
 
 /* Card */
 .latest-post-card {
-  width: 240px;
+  width: 100%;
+  max-width: 240px;
   background: var(--panel);
   padding: 16px;
   border-radius: 14px;
@@ -269,24 +270,30 @@ textarea { min-height: 7.5rem; }
 /* ===========================
    Responsive Updates
    =========================== */
-@media (max-width: 1052px) {
+@media (max-width: 1360px) {
+  .latest-post-grid {justify-content:space-between; align-items: center; grid-template-columns: repeat(5, 1fr);}
+}
+@media (max-width: 1048px) {
   .container { padding: 1rem; }
   .hero { grid-template-columns: 1fr; }
   .projects { grid-template-columns: repeat(2, 1fr); }
-  .latest-post-grid {justify-content:space-between; align-items: center; grid-template-columns: repeat(3, 1fr);}
+  .latest-post-grid {justify-content:space-between; align-items: center; grid-template-columns: repeat(4, 1fr);}
 
 }
 
-@media (max-width: 776px) {
+@media (max-width: 780px) {
   .hero { gap: 1.25rem; }
   .intro { align-items: center; text-align: center; }
   .projects { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
   form { flex-direction: column; }
-  .latest-post-grid { justify-content: space-between; align-items: center; grid-template-columns: repeat(2, 1fr);}
+  .latest-post-grid { justify-content: space-between; align-items: center; grid-template-columns: repeat(3, 1fr);}
 }
 
-@media (max-width: 584px) {
+@media (max-width: 590px) {
+  .latest-post-grid {display: flex; flex-direction: column; justify-content: center; align-items: center; grid-template-columns: repeat(1, 1fr);}
+}
+@media (max-width: 350px) {
   h1 { font-size: 1.125rem; }
   .intro h2 { font-size: 1.375rem; }
   .intro p { font-size: 0.875rem; }
@@ -295,3 +302,4 @@ textarea { min-height: 7.5rem; }
   .container { margin: 1.25rem auto; padding: 0.75rem; }
   .latest-post-grid {display: flex; flex-direction: column; justify-content: center; align-items: center; grid-template-columns: repeat(1, 1fr);}
 }
+
