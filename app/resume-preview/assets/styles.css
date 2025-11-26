@@ -183,6 +183,7 @@ body.dark .resume-page .resume-section:hover {
 ========================================== */
 
 .resume-page .download-btn {
+  text-decoration: none;
   display: block;
   margin: 28px auto 0;
   padding: 14px 20px;
@@ -227,4 +228,5 @@ body.dark .resume-page .resume-section:hover {
   background: var(--resume-accent);
   box-shadow: 0 3px 12px var(--resume-border);
 }
+
 
