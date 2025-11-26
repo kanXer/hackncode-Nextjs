@@ -6,18 +6,35 @@ import DOMPurify from "dompurify";
 export default function NewsCard({ post }) {
   const featureImg = post.feature_image || "/preview.jpg";
 
-  // Clean + shorten HTML content
-  const cleanHTML = DOMPurify.sanitize(
+  /** ----------------------------
+   *  AUTO SANITIZED + FIXED SLUG
+   *  ---------------------------- */
+  const cleanSlug = (post.slug || "")
+    .toString()
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9\- ]/g, "")     // remove symbols
+    .replace(/\s+/g, "-")             // spaces → hyphens
+    .replace(/-+/g, "-")              // multiple hyphens → single
+    .replace(/^-+|-+$/g, "");         // trim hyphens
+
+  const safeSlug = cleanSlug || "article"; // fallback slug
+
+
+  /** ----------------------------
+   *  SAFE EXCERPT GENERATION
+   *  ---------------------------- */
+  const sanitizedHTML = DOMPurify.sanitize(
     post.short_description ||
     post.excerpt ||
     post.content ||
     ""
   );
 
-  // Slice after removing HTML tags
-  const previewText = cleanHTML
-    .replace(/<[^>]*>/g, "")
-    .slice(0, 140);
+  const plainText = sanitizedHTML.replace(/<[^>]*>/g, "");
+  const trimmedText = plainText.slice(0, 140);
+  const finalPreviewHTML = `${trimmedText} ...`;
+
 
   return (
     <motion.article
@@ -27,7 +44,7 @@ export default function NewsCard({ post }) {
       whileHover={{ translateY: -6 }}
       transition={{ duration: 0.25 }}
     >
-      <Link href={`/news/${post.slug}`} className="thumb-link">
+      <Link href={`/news/${safeSlug}`} className="thumb-link">
         <div
           className="news-thumb big-thumb"
           style={{ backgroundImage: `url(${featureImg})` }}
@@ -39,11 +56,12 @@ export default function NewsCard({ post }) {
       <div className="news-body">
         <div>
           <span className="news-category">{post.category || "General"}</span>
-
           <h3 className="news-title">{post.title}</h3>
 
-          {/* HTML PARSED EXCERPT */}
-          <p className="news-excerpt" dangerouslySetInnerHTML={{ __html: previewText +" ..."}}/>
+          <p
+            className="news-excerpt"
+            dangerouslySetInnerHTML={{ __html: finalPreviewHTML }}
+          />
         </div>
 
         <div className="meta-row-bottom">
@@ -62,7 +80,7 @@ export default function NewsCard({ post }) {
             </div>
           </div>
 
-          <Link href={`/news/${post.slug}`} className="read-more">
+          <Link href={`/news/${safeSlug}`} className="read-more">
             Read More →
           </Link>
         </div>
