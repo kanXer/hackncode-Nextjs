@@ -6,9 +6,6 @@ import { Analytics } from "@vercel/analytics/next"
 
 // ALL CSS IMPORTS → Only keep required global CSS
 import "./globals.css";
-import "./components/assets/header.css";
-import "./components/assets/globalLoader.css";
-
 import LoaderWrapper from "./components/LoaderWrapper";
 import HeaderWrapper from "./components/HeaderWrapper";
 import FooterWrapper from "./components/FooterWrapper";
@@ -48,4 +45,5 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
 
