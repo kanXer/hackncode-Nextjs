@@ -4,33 +4,21 @@ export function middleware(req) {
   const path = req.nextUrl.pathname;
   const session = req.cookies.get("admin_session")?.value;
 
+  // Allowed routes
   const isLoginPage = path === "/admin/login";
+  const isLogoutApi = path === "/api/admin/logout";
+  const isLoginApi = path === "/api/admin/login";
+  const isCheckApi = path === "/api/admin/check";
 
-  // Allow auth APIs (NO redirect)
-  const isAuthApi =
-    path.startsWith("/api/admin/login") ||
-    path.startsWith("/api/admin/logout") ||
-    path.startsWith("/api/admin/check");
-
-  // 1️⃣ Allow login page and all admin auth APIs
-  if (isLoginPage || isAuthApi) {
+  // Allow login page & auth APIs
+  if (isLoginPage || isLogoutApi || isLoginApi || isCheckApi) {
     return NextResponse.next();
   }
 
-  // 2️⃣ Protect admin pages
+  // Protect admin pages only
   if (path.startsWith("/admin")) {
     if (session !== "verified") {
       return NextResponse.redirect("/admin/login");
-    }
-  }
-
-  // 3️⃣ Protect admin APIs (except auth APIs)
-  if (path.startsWith("/api/admin")) {
-    if (session !== "verified") {
-      return NextResponse.json(
-        { success: false, error: "Unauthorized" },
-        { status: 401 }
-      );
     }
   }
 
@@ -38,8 +26,5 @@ export function middleware(req) {
 }
 
 export const config = {
-  matcher: [
-    "/admin/:path*",
-    "/api/admin/:path*"
-  ],
+  matcher: ["/admin/:path*"],   // ✅ Only admin UI protected
 };
