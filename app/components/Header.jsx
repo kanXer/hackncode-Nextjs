@@ -1,40 +1,49 @@
 "use client";
+
 import "./assets/header.css";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
 export default function KxHeader() {
   const [theme, setTheme] = useState("light");
+  const [mounted, setMounted] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
+  // Prevent hydration crash
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Load theme only after mount (safe)
+  useEffect(() => {
+    if (!mounted) return;
+
     const savedTheme = localStorage.getItem("theme") || "light";
     setTheme(savedTheme);
+
+    document.body.classList.remove("light", "dark");
     document.body.classList.add(savedTheme);
-  }, []);
+  }, [mounted]);
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
+
     document.body.classList.remove("light", "dark");
     document.body.classList.add(newTheme);
+
     localStorage.setItem("theme", newTheme);
     setTheme(newTheme);
   };
 
-  const openMobileMenu = () => {
-    const nav = document.getElementById("kxMainNav");
-    const ham = document.getElementById("kxHamburger");
-
-    nav.classList.toggle("active");
-    ham.classList.toggle("open");
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev);
   };
 
-  const closeMenuOnClick = () => {
-    const nav = document.getElementById("kxMainNav");
-    const ham = document.getElementById("kxHamburger");
-
-    nav.classList.remove("active");
-    ham.classList.remove("open");
+  const closeMenu = () => {
+    setMenuOpen(false);
   };
+
+  if (!mounted) return null; // Prevents mobile crash
 
   return (
     <header className="kx-header">
@@ -49,8 +58,11 @@ export default function KxHeader() {
         </Link>
       </div>
 
-      {/* THE FIX — id="kxMainNav" added */}
-      <nav id="kxMainNav" className="kx-nav" onClick={closeMenuOnClick}>
+      {/* MOBILE MENU FIX (React-controlled) */}
+      <nav
+        className={`kx-nav ${menuOpen ? "active" : ""}`}
+        onClick={closeMenu}
+      >
         <Link href="/">Home</Link>
         <Link href="/phone_info">OSINT</Link>
         <Link href="/news">News</Link>
@@ -59,7 +71,6 @@ export default function KxHeader() {
       </nav>
 
       <div className="kx-right">
-
         <button
           aria-label="Toggle Theme"
           className="kx-theme-btn"
@@ -69,18 +80,14 @@ export default function KxHeader() {
         </button>
 
         <button
-          id="kxHamburger"
-          className="kx-hamburger"
-          onClick={openMobileMenu}
+          className={`kx-hamburger ${menuOpen ? "open" : ""}`}
+          onClick={toggleMenu}
         >
           <span></span>
           <span></span>
           <span></span>
         </button>
-
       </div>
     </header>
   );
 }
-
-
