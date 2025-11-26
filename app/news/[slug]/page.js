@@ -1,5 +1,5 @@
 // ======================================
-// NEWS DETAIL PAGE (100% FIXED)
+// NEWS DETAIL PAGE (100% FIXED, NO SLUG TOUCH)
 // ======================================
 
 export const dynamic = "force-dynamic";
@@ -14,17 +14,17 @@ import Link from "next/link";
 
 export default async function NewsDetail({ params }) {
 
-  // ✅ FIX: params is a Promise → must be awaited
+  // params must be awaited
   const { slug } = await params;
 
-  console.log("🔍 Final Slug:", slug);
+  console.log("🔍 Using DB Slug:", slug);
 
   if (!slug) return notFound();
 
   await connectDB();
 
-  // ✅ FIX: lowercase matching
-  const news = await News.findOne({ slug: slug.toLowerCase() }).lean();
+  // 👉 FIX: DO NOT EDIT SLUG — USE EXACT DB VALUE
+  const news = await News.findOne({ slug }).lean();
 
   if (!news) return notFound();
 
@@ -44,27 +44,16 @@ export default async function NewsDetail({ params }) {
     <main className="news-wrapper">
       <div className="news-card-kanxer">
 
-        {/* Back Button */}
-        <Link href="/news" className="back-btn">
-          ← Back to News
-        </Link>
+        <Link href="/news" className="back-btn">← Back to News</Link>
 
-        {/* Title */}
         <h1 className="news-title">{news.title}</h1>
 
-        {/* Short Description */}
         {news.short_description && (
           <p className="news-short-desc">{news.short_description}</p>
         )}
 
-        {/* Feature Image */}
-        <img
-          src={featureImg}
-          className="feature-img-full"
-          alt={news.title}
-        />
+        <img src={featureImg} className="feature-img-full" alt={news.title} />
 
-        {/* Author Info */}
         <div className="detail-meta">
           <img
             src={news.author_image || "/logo.jpeg"}
@@ -81,7 +70,6 @@ export default async function NewsDetail({ params }) {
           </span>
         </div>
 
-        {/* YouTube Embed */}
         {news.youtube_url && (
           <div className="yt-box">
             <iframe
@@ -93,12 +81,10 @@ export default async function NewsDetail({ params }) {
           </div>
         )}
 
-        {/* Main Content */}
         <article className="news-content">
           {blocks.map((block, index) => {
             const out = [];
 
-            // Insert HTML block
             out.push(
               <div
                 key={`b-${index}`}
@@ -106,7 +92,6 @@ export default async function NewsDetail({ params }) {
               />
             );
 
-            // Auto-insert images between text
             const expected = Math.round(((index + 1) / totalBlocks) * totalImages);
 
             while (inserted < expected && inserted < totalImages) {
@@ -128,17 +113,11 @@ export default async function NewsDetail({ params }) {
             );
           })}
 
-          {/* leftover images */}
           {images.slice(inserted).map((img, i) => (
-            <img
-              key={`extra-${i}`}
-              src={img}
-              className="img-mid"
-              alt=""
-            />
+            <img key={`extra-${i}`} src={img} className="img-mid" alt="" />
           ))}
         </article>
       </div>
     </main>
   );
-            }
+}
