@@ -1,5 +1,5 @@
 // ======================================
-// NEWS DETAIL PAGE (100% NO-CACHE)
+// NEWS DETAIL PAGE (FIXED VERSION)
 // ======================================
 
 export const dynamic = "force-dynamic";
@@ -13,13 +13,20 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 
 export default async function NewsDetail({ params }) {
-  const { slug } = params;
+
+  // ❗ FIX #1 — params को await मत करो
+  const slug = params.slug?.toLowerCase();
+
+  if (!slug) return notFound();
 
   await connectDB();
+
+  // ❗ FIX #2 — slug को lowercase करके findOne करो
   const news = await News.findOne({ slug }).lean();
 
   if (!news) return notFound();
 
+  // Same code continues
   const blocks = splitHTMLIntoBlocks(news.content || "");
   const images = Array.isArray(news.images) ? news.images : [];
 
@@ -55,14 +62,8 @@ export default async function NewsDetail({ params }) {
             className="detail-author-img"
             alt="author"
           />
-
-          <span className="detail-author-name">
-            {news.author_name || "Unknown Author"}
-          </span>
-
-          <span className="detail-author-time">
-            {new Date(news.created_at).toLocaleDateString()}
-          </span>
+          <span className="detail-author-name">{news.author_name || "Unknown"}</span>
+          <span className="detail-author-time">{new Date(news.created_at).toLocaleDateString()}</span>
         </div>
 
         {news.youtube_url && (
@@ -81,10 +82,7 @@ export default async function NewsDetail({ params }) {
             const out = [];
 
             out.push(
-              <div
-                key={`b-${index}`}
-                dangerouslySetInnerHTML={{ __html: block }}
-              />
+              <div key={`b-${index}`} dangerouslySetInnerHTML={{ __html: block }} />
             );
 
             const expected = Math.round(((index + 1) / totalBlocks) * totalImages);
@@ -109,15 +107,11 @@ export default async function NewsDetail({ params }) {
           })}
 
           {images.slice(inserted).map((img, i) => (
-            <img
-              key={`extra-${i}`}
-              src={img}
-              className="img-mid"
-              alt=""
-            />
+            <img key={`extra-${i}`} src={img} className="img-mid" alt="" />
           ))}
         </article>
+
       </div>
     </main>
   );
-}
+                    }
