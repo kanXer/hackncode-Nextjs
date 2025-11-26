@@ -1,6 +1,11 @@
 /* ===========================================
    BACKGROUND FULL PAGE
 =========================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 html, body {
   max-width: 100%;
   overflow-x: hidden;
@@ -129,3 +134,4 @@ html, body {
     max-width: 340px;
   }
 }
+
