@@ -39,7 +39,7 @@ export default function PhoneInfoPage() {
   };
 
   return (
-    <div className="phone-info-page container" style={{ padding: "20px 0" }}>
+    <div className="phone-info-page" style={{ padding: "20px 0" }}>
       {/* ---------------- TITLE ---------------- */}
       <h2 style={{ textAlign: "center", fontWeight: "700" }}>
         📞 Phone & Email Lookup
@@ -163,3 +163,4 @@ export default function PhoneInfoPage() {
     </div>
   );
 }
+
