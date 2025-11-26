@@ -9,22 +9,23 @@ export async function POST(req) {
   try {
     await connectDB();
 
-    const form = await req.formData();
+    const { searchParams } = new URL(req.url);
+    const slug = searchParams.get("slug");  // ⭐ FIXED SLUG LOCATION
 
-    // ❌ SLUG now read only, not editable
-    const slug = form.get("slug");
+    const form = await req.formData();
 
     const title = form.get("title");
     const content = form.get("content");
     const youtube_url = form.get("youtube_url");
 
-    // ❌ Force protected fields (never update)
     const removeImages = JSON.parse(form.get("remove_images") || "[]");
 
-    // Fetch existing post
     const news = await News.findOne({ slug });
     if (!news) {
-      return NextResponse.json({ success: false, error: "Post not found" });
+      return NextResponse.json({
+        success: false,
+        error: "Post not found",
+      });
     }
 
     /* =============================
@@ -32,29 +33,28 @@ export async function POST(req) {
     ============================== */
     let updatedGallery = [...news.images];
 
-    for (const imgUrl of removeImages) {
-      const publicId = extractPublicId(imgUrl);
-      if (publicId) {
-        await deleteFromCloudinary(publicId);
-      }
-      updatedGallery = updatedGallery.filter((i) => i !== imgUrl);
+    for (const img of removeImages) {
+      const publicId = extractPublicId(img);
+      if (publicId) await deleteFromCloudinary(publicId);
+
+      updatedGallery = updatedGallery.filter((i) => i !== img);
     }
 
     /* =============================
-       UPDATE FEATURE IMAGE
+       FEATURE IMAGE UPDATE
     ============================== */
-    if (form.get("feature_image")?.size > 0) {
+    const newFeature = form.get("feature_image");
+    if (newFeature && newFeature.size > 0) {
       if (news.feature_image) {
-        const publicId = extractPublicId(news.feature_image);
-        if (publicId) await deleteFromCloudinary(publicId);
+        const oldId = extractPublicId(news.feature_image);
+        if (oldId) await deleteFromCloudinary(oldId);
       }
 
-      const newFeature = await uploadToCloudinary(
-        form.get("feature_image"),
+      const uploadedFeature = await uploadToCloudinary(
+        newFeature,
         "hackncode/feature"
       );
-
-      news.feature_image = newFeature;
+      news.feature_image = uploadedFeature;
     }
 
     /* =============================
@@ -63,24 +63,18 @@ export async function POST(req) {
     const galleryFiles = form.getAll("images");
 
     for (const file of galleryFiles) {
-      if (file && file.size > 0) {
-        const uploaded = await uploadToCloudinary(file, "hackncode/gallery");
-        updatedGallery.push(uploaded);
+      if (file.size > 0) {
+        const url = await uploadToCloudinary(file, "hackncode/gallery");
+        updatedGallery.push(url);
       }
     }
 
     /* =============================
-       UPDATE ONLY ALLOWED FIELDS
+       UPDATE ONLY SAFE FIELDS
     ============================== */
-
     news.title = title;
     news.content = content;
     news.youtube_url = youtube_url;
-
-    // ❌ PROTECTED — DO NOT UPDATE
-    // news.short_description = short_description;
-    // news.author_name = user_name;
-
     news.images = updatedGallery;
 
     await news.save();
@@ -89,6 +83,9 @@ export async function POST(req) {
 
   } catch (err) {
     console.log("EDIT ERROR:", err);
-    return NextResponse.json({ success: false, error: err.message });
+    return NextResponse.json({
+      success: false,
+      error: err.message,
+    });
   }
 }
