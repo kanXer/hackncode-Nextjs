@@ -1,7 +1,7 @@
 // ==============================
 // HOME PAGE (100% NO-CACHE)
 // ==============================
-import "./news/assets/styles.css";
+import "./assets/home.css";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -108,4 +108,5 @@ export default function HomePage() {
     </>
   );
             }
+
 
