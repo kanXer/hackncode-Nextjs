@@ -7,7 +7,7 @@ export default async function LatestPosts() {
   await connectDB();
 
   const posts = await News.find()
-    .sort({ createdAt: -1 })
+    .sort({ created_at: -1 })
     .limit(8)
     .lean();
 
@@ -48,3 +48,4 @@ export default async function LatestPosts() {
     </section>
   );
 }
+
