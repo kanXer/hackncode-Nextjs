@@ -1,27 +1,22 @@
-/* ===========================================
-   BACKGROUND FULL PAGE
-=========================================== */
+/* Background full page */
 html, body {
   max-width: 100%;
   overflow-x: hidden;
+  height: 100%;          /* FULL HEIGHT IMPORTANT */
 }
 
-/* ===========================================
-   LOGIN WRAPPER (PERFECT CENTER)
-=========================================== */
+/* LOGIN WRAPPER FIXED (CENTERED) */
 .login-wrap {
   width: 100%;
-  min-height: 100vh;       /* full screen height */
+  min-height: 100vh;      
   display: flex;
-  justify-content: center; /* center horizontally */
-  align-items: center;     /* center vertically */
+  justify-content: center;
+  align-items: center;    
   padding: 20px;
   box-sizing: border-box;
 }
 
-/* ===========================================
-   LOGIN CARD (NATURAL WIDTH)
-=========================================== */
+/* Login Card */
 .login-box {
   background: rgba(15, 20, 32, 0.75);
   backdrop-filter: blur(12px);
@@ -29,9 +24,8 @@ html, body {
   border-radius: 14px;
   box-sizing: border-box;
 
-  width: auto;            /* ❗ NOT full width */
-  max-width: 380px;       /* limit only (desktop) */
-  margin: 0 auto;         /* safety centering */
+  width: auto;
+  max-width: 380px;
 
   border: 1px solid rgba(0, 255, 170, 0.1);
   box-shadow: 0 0 25px rgba(0, 255, 170, 0.1),
@@ -40,80 +34,7 @@ html, body {
   animation: fadeIn 0.35s ease-in-out;
 }
 
-/* Title */
-.login-box h2 {
-  text-align: center;
-  margin-bottom: 25px;
-  color: #00f7a6;
-  font-size: 26px;
-  font-weight: 700;
-  text-shadow: 0 0 10px rgba(0, 255, 170, 0.4);
-}
-
-/* ===========================================
-   INPUT FIELDS
-=========================================== */
-.login-box input {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  background: rgba(10, 15, 25, 0.7);
-  border: 1px solid rgba(0, 255, 170, 0.15);
-  color: #d8ffe9;
-  border-radius: 8px;
-  font-size: 15px;
-  outline: none;
-  transition: 0.25s;
-}
-
-.login-box input:focus {
-  border-color: #00ffae;
-  box-shadow: 0 0 12px rgba(0, 255, 170, 0.4);
-}
-
-/* ===========================================
-   BUTTON
-=========================================== */
-.login-box button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 15px;
-  background: linear-gradient(135deg, #00ffaa 0%, #00cc7d 100%);
-  color: #000;
-  border: none;
-  border-radius: 8px;
-  font-size: 17px;
-  cursor: pointer;
-  transition: 0.25s;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  text-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
-}
-
-.login-box button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 18px rgba(0, 255, 170, 0.5);
-  background: linear-gradient(135deg, #00ffc1 0%, #00e699 100%);
-}
-
-.login-box button:disabled {
-  background: #0f201c;
-  color: #4f5d56;
-  cursor: not-allowed;
-}
-
-/* ===========================================
-   FADE ANIMATION
-=========================================== */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(15px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ===========================================
-   MOBILE RESPONSIVE
-=========================================== */
+/* MOBILE RESPONSIVE */
 @media (max-width: 480px) {
   .login-wrap {
     padding: 10px;
@@ -121,6 +42,12 @@ html, body {
 
   .login-box {
     padding: 25px 22px;
-    max-width: 340px;   /* smaller on mobile */
+    max-width: 340px;
   }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
