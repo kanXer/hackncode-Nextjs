@@ -19,7 +19,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "https://hackncode.live/resume-preview.jpg",
+        url: "https://hackncode.live/resume-preview.jpeg",
         width: 1200,
         height: 630,
         alt: "KanXer OSINT — OSINT Lookup Tool",
@@ -31,10 +31,11 @@ export const metadata = {
     card: "summary_large_image",
     title: "Sahil Srivastava — Resume",
     description: "Full-Stack Developer | Cybersecurity Enthusiast | KanXer OSINT Creator",
-    images: ["https://hackncode.live/resume-preview.jpg"],
+    images: ["https://hackncode.live/logo.jpeg"],
     creator: "@YourTwitterHandle",
   },
 };
 export default function ResumePreviewLayout({ children }) {
   return <>{children}</>;
 }
+
