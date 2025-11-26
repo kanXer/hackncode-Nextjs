@@ -1,0 +1,49 @@
+.global-intro-screen {
+  position: fixed;
+  inset: 0;
+  background: #050505;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeOut 0.4s ease forwards;
+}
+
+.global-intro-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 100px;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+
+.global-name {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.global-slogn {
+  font-size: 14px;
+  opacity: 0.7;
+  margin-bottom: 22px;
+}
+
+.global-welcome {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.global-dots span {
+  animation: blink 1s infinite ease;
+  margin: 0 4px;
+  font-size: 24px;
+}
+
+@keyframes blink {
+  0% { opacity: 0.2 }
+  50% { opacity: 1 }
+  100% { opacity: 0.2 }
+}

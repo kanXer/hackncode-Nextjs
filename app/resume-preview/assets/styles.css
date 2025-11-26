@@ -1,0 +1,230 @@
+/* ==========================================
+   VARIABLES (LIGHT + DARK SUPPORT)
+========================================== */
+.resume-page {
+  --resume-card: rgba(255, 255, 255, 0.85);
+  --resume-border: rgba(0, 180, 80, 0.25);
+  --resume-text: #232323;
+  --resume-subtext: #4b4b4b;
+  --resume-accent: #0dbb4c;
+}
+
+/* DARK MODE OVERRIDES */
+body.dark .resume-page {
+  --resume-bg: linear-gradient(145deg, #0a0f0a, #000000);
+  --resume-card: rgba(20, 20, 20, 0.9);
+  --resume-border: rgba(20, 200, 120, 0.55);
+  --resume-text: #e9f6ee;
+  --resume-subtext: #a8b3a6;
+  --resume-accent: #14ff65;
+}
+
+/* ==========================================
+   Resume Page Base
+========================================== */
+
+.resume-page {
+  padding: 50px 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: var(--resume-bg);
+  animation: fadeBg 0.4s ease-in-out;
+  color: var(--resume-text);
+}
+
+@keyframes fadeBg {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* MAIN WRAPPER */
+.resume-page .resume-wrapper {
+  width: 95%;
+  max-width: 800px;
+  padding: 36px;
+  background: var(--resume-card);
+  border-radius: 22px;
+  border: 1px solid var(--resume-border);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15),
+              0 0 25px var(--resume-border);
+  animation: floatIn 0.45s ease-out;
+}
+
+@keyframes floatIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ==========================================
+   Header
+========================================== */
+
+.resume-page .profile-pic {
+  width: 115px;
+  height: 115px;
+  border-radius: 100px;
+  border: 3px solid var(--resume-accent);
+  object-fit: cover;
+  margin: 0 auto 14px;
+  display: block;
+  box-shadow: 0 0 12px var(--resume-border);
+}
+
+.resume-page .name {
+  font-size: 34px;
+  font-weight: 800;
+  text-align: center;
+  color: var(--resume-accent);
+  text-shadow: 0 0 10px var(--resume-border);
+  margin-bottom: 6px;
+}
+
+/* INTRO */
+.resume-page .resume-slogn {
+  text-align: center;
+  font-size: 18px;
+  color: var(--resume-text);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.resume-page .resume-intro {
+  text-align: center;
+  color: var(--resume-subtext);
+  margin-bottom: 26px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ==========================================
+   Navigation Buttons
+========================================== */
+
+.resume-page .resume-nav-top {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.resume-page .resume-nav-top button {
+  flex: 1;
+  padding: 12px;
+  background: var(--resume-accent);
+  color: black;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 4px 14px var(--resume-border);
+  transition: 0.25s ease;
+}
+
+body.dark .resume-page .resume-nav-top button {
+  color: black;
+}
+
+.resume-page .resume-nav-top button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.15);
+}
+
+.resume-page .resume-nav-top button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ==========================================
+   Content Sections
+========================================== */
+
+.resume-page .resume-section {
+  padding: 26px;
+  background: var(--resume-card);
+  border-radius: 18px;
+  border: 1px solid var(--resume-border);
+  box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+  margin-bottom: 26px;
+  transition: 0.3s ease;
+}
+
+.resume-page .resume-section:hover {
+  background: rgba(255,255,255,0.96);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 26px var(--resume-border);
+}
+
+body.dark .resume-page .resume-section:hover {
+  background: rgba(25,25,25,0.96);
+}
+
+/* Titles */
+.resume-page .resume-section-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--resume-accent);
+  margin-bottom: 16px;
+}
+
+.resume-page .resume-item-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--resume-text);
+}
+
+.resume-page .resume-item-content {
+  font-size: 14px;
+  color: var(--resume-subtext);
+  margin-bottom: 14px;
+}
+
+/* ==========================================
+   Download Button
+========================================== */
+
+.resume-page .download-btn {
+  display: block;
+  margin: 28px auto 0;
+  padding: 14px 20px;
+  width: 100%;
+  max-width: 260px;
+  background: var(--resume-accent);
+  color: black;
+  border-radius: 14px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 16px;
+  box-shadow: 0 6px 18px var(--resume-border);
+  transition: 0.25s ease;
+}
+
+.resume-page .download-btn:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.1);
+}
+
+/* ==========================================
+   Progress Dots
+========================================== */
+
+.resume-page .resume-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.resume-page .resume-dot {
+  width: 12px;
+  height: 12px;
+  background: var(--resume-border);
+  border-radius: 10px;
+  transition: 0.3s ease;
+}
+
+.resume-page .resume-dot.active {
+  width: 28px;
+  background: var(--resume-accent);
+  box-shadow: 0 3px 12px var(--resume-border);
+}

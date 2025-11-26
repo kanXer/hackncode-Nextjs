@@ -3,7 +3,6 @@ import { connectDB } from "@/lib/mongo";
 import { News } from "@/lib/models/News";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import "./assets/styles.css";
 
 export default async function NewsDetail({ params }) {
   const p = await params;

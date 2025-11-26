@@ -1,3 +1,4 @@
+import "./assets/styles.css";
 export const metadata = {
   title: "OSINT Lookup Tool | KanXer OSINT",
   description: "Phone, Email & ID OSINT Lookup Tool (KanXer Theme)",

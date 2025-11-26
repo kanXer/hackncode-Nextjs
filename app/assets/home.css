@@ -121,6 +121,62 @@
 }
 
 
+/* FIX: Grid अब बड़े cards बनाएगा */
+/* FIX: Exact 4 cards per row on large screens */
+.latest-post-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);   /* 4 items per row */
+  gap: 16px;
+}
+
+
+/* Card */
+.latest-post-card {
+  width: 240px;
+  background: var(--panel);
+  padding: 16px;
+  border-radius: 14px;
+  text-decoration: none;
+  color: var(--muted);
+  transition: 0.25s ease;
+  border: 1px solid rgba(255,255,255,0.08);
+  overflow: hidden;
+}
+.latest-post-card h3{
+  font-size: small;
+}
+.latest-post-card:hover {
+  background: #0a0f0c;
+  color: white;
+  transform: translateY(-4px);
+  border-color: var(--accent);
+}
+
+/* Photo container */
+.latest-post-card .thumb {
+  width: 100%;
+  height: 130px;      /* thinner card look */
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  background: #111;
+}
+
+.latest-post-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: 0.3s ease;
+}
+
+
+/* Slight zoom on hover */
+.latest-post-card:hover img {
+  transform: scale(1.05);
+}
+
+
 
 /* ===========================
    Projects
@@ -213,25 +269,29 @@ textarea { min-height: 7.5rem; }
 /* ===========================
    Responsive Updates
    =========================== */
-@media (max-width: 1024px) {
+@media (max-width: 1052px) {
   .container { padding: 1rem; }
   .hero { grid-template-columns: 1fr; }
   .projects { grid-template-columns: repeat(2, 1fr); }
+  .latest-post-grid {justify-content:space-between; align-items: center; grid-template-columns: repeat(3, 1fr);}
+
 }
 
-@media (max-width: 768px) {
+@media (max-width: 776px) {
   .hero { gap: 1.25rem; }
   .intro { align-items: center; text-align: center; }
   .projects { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
   form { flex-direction: column; }
+  .latest-post-grid { justify-content: space-between; align-items: center; grid-template-columns: repeat(2, 1fr);}
 }
 
-@media (max-width: 480px) {
+@media (max-width: 584px) {
   h1 { font-size: 1.125rem; }
   .intro h2 { font-size: 1.375rem; }
   .intro p { font-size: 0.875rem; }
   .projects { grid-template-columns: 1fr; }
   .btn { width: 100%; text-align: center; }
   .container { margin: 1.25rem auto; padding: 0.75rem; }
+  .latest-post-grid {display: flex; flex-direction: column; justify-content: center; align-items: center; grid-template-columns: repeat(1, 1fr);}
 }

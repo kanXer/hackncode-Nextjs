@@ -1,3 +1,4 @@
+import "./assets/styles.css";
 export const metadata = {
   title: "Sahil Srivastava — Resume",
   description: "Full-Stack Developer | Sahil Srivastava | KanXer OSINT Creator",

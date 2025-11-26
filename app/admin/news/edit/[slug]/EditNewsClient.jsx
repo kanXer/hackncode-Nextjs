@@ -3,18 +3,16 @@ import "./assets/styles.css"
 import { useState, useEffect } from "react";
 
 export default function EditNewsClient({ slug }) {
-  // STATES
   const [loading, setLoading] = useState(true);
 
   const [title, setTitle] = useState("");
   const [shortDesc, setShortDesc] = useState("");
   const [content, setContent] = useState("");
   const [youtube, setYoutube] = useState("");
-  const [userName, setUserName] = useState("");
 
   const [featurePreview, setFeaturePreview] = useState(null);
   const [galleryPreview, setGalleryPreview] = useState([]);
-  const [removeGallery, setRemoveGallery] = useState([]); // delete list
+  const [removeGallery, setRemoveGallery] = useState([]);
 
   // -----------------------------
   // LOAD NEWS
@@ -36,14 +34,12 @@ export default function EditNewsClient({ slug }) {
           return;
         }
 
-        // Fill form
         setTitle(json.title || "");
         setShortDesc(json.short_description || "");
         setContent(json.content || "");
         setYoutube(json.youtube_url || "");
-        setUserName(json.user_name || "");
 
-        // FEATURE URL CHECK
+        // FEATURE URL
         setFeaturePreview(
           json.feature_image?.startsWith("http")
             ? json.feature_image
@@ -52,7 +48,7 @@ export default function EditNewsClient({ slug }) {
             : null
         );
 
-        // GALLERY URLs CHECK
+        // GALLERY URLs
         setGalleryPreview(
           (json.images || []).map((img) =>
             img.startsWith("http") ? img : `/uploads/${img}`
@@ -70,7 +66,6 @@ export default function EditNewsClient({ slug }) {
     load();
   }, [slug]);
 
-  // Remove gallery image
   function removeImage(imgUrl) {
     setGalleryPreview((prev) => prev.filter((i) => i !== imgUrl));
     setRemoveGallery((prev) => [...prev, imgUrl]);
@@ -89,16 +84,13 @@ export default function EditNewsClient({ slug }) {
     form.append("short_description", shortDesc);
     form.append("content", content);
     form.append("youtube_url", youtube);
-    form.append("user_name", userName);
 
     form.append("remove_images", JSON.stringify(removeGallery));
 
-    // FEATURE UPDATE
     if (e.target.feature_image.files[0]) {
       form.append("feature_image", e.target.feature_image.files[0]);
     }
 
-    // NEW GALLERY IMAGES
     if (e.target.images.files.length > 0) {
       for (const img of e.target.images.files) {
         form.append("images", img);
@@ -134,13 +126,6 @@ export default function EditNewsClient({ slug }) {
         <label>Title</label>
         <input value={title} onChange={(e) => setTitle(e.target.value)} />
 
-        {/* Short Desc */}
-        <label>Short Description</label>
-        <input
-          value={shortDesc}
-          onChange={(e) => setShortDesc(e.target.value)}
-        />
-
         {/* Content */}
         <label>Content</label>
         <textarea
@@ -152,10 +137,6 @@ export default function EditNewsClient({ slug }) {
         {/* YouTube ID */}
         <label>YouTube Video ID</label>
         <input value={youtube} onChange={(e) => setYoutube(e.target.value)} />
-
-        {/* Author */}
-        <label>Author Name</label>
-        <input value={userName} onChange={(e) => setUserName(e.target.value)} />
 
         {/* FEATURE IMAGE */}
         <label>Feature Image</label>

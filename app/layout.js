@@ -1,8 +1,10 @@
 import "./globals.css";
+import LoaderWrapper from "./components/LoaderWrapper";
 import HeaderWrapper from "./components/HeaderWrapper";
 import FooterWrapper from "./components/FooterWrapper";
-
-
+import "./components/assets/header.css";
+import "./components/assets/globalLoader.css";
+import './assets/home.css';
 export const metadata = {
   title: "KanXer OSINT — Intelligence Tools, Cyber Lookup & Investigations",
   description:
@@ -64,6 +66,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body >
+        {<LoaderWrapper />}
         {<HeaderWrapper />}
 
         {children}

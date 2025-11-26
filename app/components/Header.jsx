@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import "./assets/header.css";
 
 export default function KxHeader() {
   const [theme, setTheme] = useState("light");

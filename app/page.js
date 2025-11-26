@@ -1,7 +1,5 @@
-"use client";
-
 import ContactSection from "./components/ContactSection";
-import './assets/home.css';
+import LatestPosts from "./components/LatestPosts";
 export default function HomePage() {
   return (
     <>
@@ -54,10 +52,11 @@ export default function HomePage() {
             <a className="btn" href="#projects">View Projects</a>
           </aside>
         </section>
-
+        
         {/* PROJECTS */}
+        <h1>Projects</h1>
         <section id="projects" className="projects">
-          <h1>Projects</h1>
+          
 
           <a href="/phone_info" className="project">
             <h3>Phone & Email OSINT</h3>
@@ -81,7 +80,7 @@ export default function HomePage() {
             <p>Boost your Instagram reach instantly.</p>
           </a>
         </section>
-
+        <LatestPosts />
         {/* CONTACT SECTION */}
         <ContactSection />
 

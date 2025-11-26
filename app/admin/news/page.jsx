@@ -56,8 +56,6 @@ export default function AdminCreateNews() {
         <label>Title *</label>
         <input type="text" name="title" required />
 
-        <label>Short Description *</label>
-        <input type="text" name="short_description" required />
 
         <label>Slug *</label>
         <input type="text" name="slug" required />
