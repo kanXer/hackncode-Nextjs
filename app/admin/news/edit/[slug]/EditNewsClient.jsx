@@ -6,7 +6,6 @@ export default function EditNewsClient({ slug }) {
   const [loading, setLoading] = useState(true);
 
   const [title, setTitle] = useState("");
-  const [shortDesc, setShortDesc] = useState("");
   const [content, setContent] = useState("");
   const [youtube, setYoutube] = useState("");
 
@@ -35,11 +34,9 @@ export default function EditNewsClient({ slug }) {
         }
 
         setTitle(json.title || "");
-        setShortDesc(json.short_description || "");
         setContent(json.content || "");
         setYoutube(json.youtube_url || "");
 
-        // FEATURE URL
         setFeaturePreview(
           json.feature_image?.startsWith("http")
             ? json.feature_image
@@ -48,7 +45,6 @@ export default function EditNewsClient({ slug }) {
             : null
         );
 
-        // GALLERY URLs
         setGalleryPreview(
           (json.images || []).map((img) =>
             img.startsWith("http") ? img : `/uploads/${img}`
@@ -79,9 +75,10 @@ export default function EditNewsClient({ slug }) {
 
     const form = new FormData();
 
-    form.append("slug", slug);
+    // ❌ Slug is NOT added anymore (can't override)
+    // form.append("slug", slug);
+
     form.append("title", title);
-    form.append("short_description", shortDesc);
     form.append("content", content);
     form.append("youtube_url", youtube);
 
@@ -182,4 +179,4 @@ export default function EditNewsClient({ slug }) {
       </form>
     </div>
   );
-}
+    }
