@@ -36,6 +36,7 @@ html, body {
 .card.intro {
   padding: 2rem 1.5rem;
   border-radius: 20px;
+
   background: var(--panel);
   border: 1px solid rgba(20,184,102,0.12);
   box-shadow: 0 0 20px rgba(20,184,102,0.2);
@@ -58,15 +59,14 @@ html, body {
   line-height: 1.6;
 }
 
-/* ======================================================
-   SKILLS TAGS
-====================================================== */
+/* Skills */
 .skills {
   display: flex;
   gap: 0.45rem;
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 0.75rem;
+  margin-bottom: 8px !important; /* Important fix */
 }
 
 .skill {
@@ -79,7 +79,7 @@ html, body {
 }
 
 /* ======================================================
-   PREMIUM BUTTONS (Resume / View Projects)
+   BUTTON — PREMIUM
 ====================================================== */
 .btn {
   display: inline-flex;
@@ -105,11 +105,16 @@ html, body {
   opacity: 0.95;
 }
 
-/* Light Mode Button */
+/* Light mode */
 body.light .btn {
   background: #000 !important;
   color: #fff !important;
   box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+}
+
+/* FIX → Resume button spacing */
+.card.intro .btn {
+  margin-top: 28px !important;
 }
 
 /* ======================================================
@@ -118,6 +123,7 @@ body.light .btn {
 .card.profile {
   padding: 1.6rem;
   border-radius: 20px;
+
   background: var(--panel);
   border: 1px solid rgba(20,184,102,0.12);
   box-shadow: 0 0 20px rgba(20,184,102,0.2);
@@ -130,7 +136,7 @@ body.light .btn {
   border-radius: 16px;
   overflow: hidden;
   border: 3px solid rgba(20,184,102,0.3);
-  margin: 0 auto 12px auto;
+  margin: 0 auto;
 }
 
 .avatar img {
@@ -139,9 +145,19 @@ body.light .btn {
   object-fit: cover;
 }
 
+.profile .meta {
+  margin-top: 14px !important;
+  margin-bottom: 6px !important;
+}
+
 .profile .meta p {
   color: var(--muted);
   margin: 2px 0;
+}
+
+/* FIX → View Projects button spacing */
+.profile .btn {
+  margin-top: 22px !important;
 }
 
 /* ======================================================
@@ -159,9 +175,11 @@ body.light .btn {
   background: var(--panel);
   border-radius: 16px;
   border: 1px solid rgba(20,184,102,0.12);
+
   text-align: center;
   text-decoration: none;
   color: var(--muted);
+
   transition: 0.25s;
 }
 
@@ -212,33 +230,37 @@ body.light .btn {
   object-fit: cover;
 }
 
-.latest-post-card p {
-  margin-top: 6px;
-  font-size: 0.87rem;
-}
-
 /* ======================================================
-   CONTACT FORM — PREMIUM UI
+   CONTACT FORM — PREMIUM UI (UPDATED)
 ====================================================== */
 .contact-section {
   margin-top: 2.8rem;
-  padding: 28px;
+  padding: 38px 28px !important;
   border-radius: 20px;
+
   background: var(--panel);
   border: 1px solid rgba(20,184,102,0.15);
   box-shadow: 0 0 25px rgba(20,184,102,0.25);
 }
 
+/* Heading spacing */
 .contact-section h2 {
   font-size: 1.8rem;
   color: var(--accent);
-  margin-bottom: 0.75rem;
+  margin-bottom: 18px !important;
 }
 
+/* Description spacing */
+.contact-section p.small {
+  margin-bottom: 22px !important;
+}
+
+/* Form grid */
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2.5rem;
+  margin-bottom: 20px;
 }
 
 @media (max-width: 760px) {
@@ -247,35 +269,39 @@ body.light .btn {
   }
 }
 
+/* Labels spacing */
 form label {
-  display: block;
-  margin-bottom: 6px;
+  margin-top: 14px !important;
+  margin-bottom: 6px !important;
   font-weight: 700;
   color: var(--accent);
 }
 
+form label:first-of-type {
+  margin-top: 0 !important;
+}
+
+/* Inputs */
 form input,
 form textarea {
   width: 100%;
   padding: 14px;
   border-radius: 12px;
   font-size: 0.95rem;
+
   background: rgba(255,255,255,0.02);
   border: 1px solid rgba(255,255,255,0.08);
   color: inherit;
+
   outline: none;
   transition: 0.25s;
+  margin-bottom: 12px !important;
 }
 
 input:focus,
 textarea:focus {
   border-color: var(--accent);
   box-shadow: 0 0 12px rgba(20,184,102,0.4);
-}
-
-textarea {
-  min-height: 120px;
-  resize: vertical;
 }
 
 /* Light mode inputs */
@@ -286,7 +312,17 @@ body.light textarea {
   color: #000;
 }
 
-/* ERROR BOX */
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Button spacing */
+form button.btn {
+  margin-top: 18px !important;
+}
+
+/* Error box */
 .api-error-box {
   background: rgba(255, 0, 0, 0.1);
   padding: 12px 14px;
@@ -296,23 +332,24 @@ body.light textarea {
   margin-bottom: 14px;
 }
 
-/* Right Side Contact Card */
+/* Contact Info Card */
 .contact-info-card {
-  padding: 16px;
+  padding: 22px !important;
   border-radius: 16px;
+
   background: rgba(0,0,0,0.25);
   border: 1px solid rgba(20,184,102,0.12);
+
   text-align: center;
+}
+
+.contact-info-card h3 {
+  margin-bottom: 12px;
 }
 
 body.light .contact-info-card {
   background: #fff;
   border-color: #ddd;
-}
-
-.contact-info-card p {
-  color: var(--muted);
-  margin: 4px 0;
 }
 
 /* Social Icons */
