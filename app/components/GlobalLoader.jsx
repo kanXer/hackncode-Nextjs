@@ -1,4 +1,5 @@
 "use client";
+import "globalLoader.css";
 import { useState, useEffect } from "react";
 export default function GlobalLoader() {
   const [show, setShow] = useState(true);
@@ -25,3 +26,4 @@ export default function GlobalLoader() {
     </div>
   );
 }
+
