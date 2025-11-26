@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css";
 import LoaderWrapper from "./components/LoaderWrapper";
@@ -79,3 +82,4 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
