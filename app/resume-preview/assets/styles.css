@@ -192,6 +192,7 @@ body.dark .resume-page .resume-section:hover {
   background: var(--resume-accent);
   color: black;
   border-radius: 14px;
+  justify-content: center;
   text-align: center;
   font-weight: 700;
   font-size: 16px;
@@ -228,5 +229,6 @@ body.dark .resume-page .resume-section:hover {
   background: var(--resume-accent);
   box-shadow: 0 3px 12px var(--resume-border);
 }
+
 
 
