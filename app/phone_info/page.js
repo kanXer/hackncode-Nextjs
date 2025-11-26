@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+
 export default function PhoneInfoPage() {
   const [mode, setMode] = useState("");
   const [query, setQuery] = useState("");
@@ -7,23 +8,38 @@ export default function PhoneInfoPage() {
   const [consent, setConsent] = useState(false);
   const [error, setError] = useState("");
   const [results, setResults] = useState(null);
+  const [loading, setLoading] = useState(false); // 🔥 NEW
 
   const handleSearch = async (e) => {
     e.preventDefault();
     setError("");
     setResults(null);
+    setLoading(true); // 🔥 Start loading
 
-    if (!consent) return setError("⚠️ Please confirm legal consent.");
-    if (!query.trim()) return setError("📱 Enter a value to lookup.");
+    if (!consent) {
+      setLoading(false);
+      return setError("⚠️ Please confirm legal consent.");
+    }
 
-    if (mode === "phone" && !/^\+91\d{10}$/.test(query))
+    if (!query.trim()) {
+      setLoading(false);
+      return setError("📱 Enter a value to lookup.");
+    }
+
+    if (mode === "phone" && !/^\+91\d{10}$/.test(query)) {
+      setLoading(false);
       return setError("📵 Invalid phone number. Format: +911234567890");
+    }
 
-    if (mode === "email" && !query.includes("@"))
+    if (mode === "email" && !query.includes("@")) {
+      setLoading(false);
       return setError("📧 Invalid email address.");
+    }
 
-    if (mode === "id" && query.length < 6)
+    if (mode === "id" && query.length < 6) {
+      setLoading(false);
       return setError("🆔 ID must be minimum 6 characters.");
+    }
 
     try {
       const res = await fetch("/api/osint", {
@@ -36,6 +52,8 @@ export default function PhoneInfoPage() {
     } catch {
       setError("⚡ Server error. Try again.");
     }
+
+    setLoading(false); // 🔥 Stop loading
   };
 
   return (
@@ -93,7 +111,7 @@ export default function PhoneInfoPage() {
             </label>
           </div>
 
-          {/* --- INPUT BOX (hydration safe) --- */}
+          {/* --- INPUT BOX --- */}
           <input
             className="lookup-input"
             placeholder={placeholder}
@@ -111,8 +129,21 @@ export default function PhoneInfoPage() {
             I confirm this search is for legal & educational use only.
           </label>
 
-          <button className="btn lookup-btn">🔍 Search</button>
+          {/* --- BUTTON WITH LOADING --- */}
+          <button className="btn lookup-btn" disabled={loading}>
+            {loading ? "⏳ Searching..." : "🔍 Search"}
+          </button>
         </form>
+
+        {/* --- LOADING BAR --- */}
+        {loading && (
+          <div style={{ marginTop: 20, textAlign: "center" }}>
+            <div className="loader-bar"></div>
+            <p style={{ color: "#aaa", marginTop: 8 }}>
+              Fetching OSINT data…
+            </p>
+          </div>
+        )}
       </div>
 
       {/* ---------------- ERROR ---------------- */}
@@ -163,4 +194,3 @@ export default function PhoneInfoPage() {
     </div>
   );
 }
-
