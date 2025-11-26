@@ -1,29 +1,31 @@
 import { NextResponse } from "next/server";
 
 export function middleware(req) {
-  const url = req.nextUrl;
-  const path = url.pathname;
+  const path = req.nextUrl.pathname;
   const session = req.cookies.get("admin_session")?.value;
 
   const isLoginPage = path === "/admin/login";
+
+  // ALLOW THESE APIs (NO REDIRECT)
   const isAuthApi =
     path.startsWith("/api/admin/login") ||
-    path.startsWith("/api/admin/logout");
+    path.startsWith("/api/admin/logout") ||
+    path.startsWith("/api/admin/check");
 
-  // Allow login page & login/logout APIs
+  // 1️⃣ Allow login page and auth APIs
   if (isLoginPage || isAuthApi) {
     return NextResponse.next();
   }
 
-  // Protect admin UI pages
+  // 2️⃣ Protect admin UI pages
   if (path.startsWith("/admin")) {
     if (session !== "verified") {
-      return NextResponse.redirect(new URL("/admin/login", req.url));
+      return NextResponse.redirect("/admin/login");
     }
   }
 
-  // ❗ API/admin routes must not be protected except login/logout
-  if (path.startsWith("/api/admin") && !isAuthApi) {
+  // 3️⃣ Protect admin APIs EXCEPT login/logout/check
+  if (path.startsWith("/api/admin")) {
     if (session !== "verified") {
       return NextResponse.json(
         { success: false, error: "Unauthorized" },
@@ -36,8 +38,5 @@ export function middleware(req) {
 }
 
 export const config = {
-  matcher: [
-    "/admin/:path*",     // Protect admin dashboard pages
-    "/api/admin/:path*", // Protect admin APIs
-  ],
+  matcher: ["/admin/:path*", "/api/admin/:path*"],
 };
