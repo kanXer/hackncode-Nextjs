@@ -2,8 +2,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
 
-  const response = NextResponse.redirect("/admin/login");
-
+  new URL("/admin/login", process.env.NEXT_PUBLIC_BASE_URL || "https://hackncode.live")
   response.cookies.set("admin_session", "", {
     httpOnly: true,
     secure: true,
@@ -14,3 +13,4 @@ export async function GET() {
 
   return response;
 }
+
