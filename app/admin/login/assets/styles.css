@@ -1,32 +1,46 @@
-/* Background full page */
+/* ===========================================
+   BACKGROUND FULL PAGE
+=========================================== */
 html, body {
   max-width: 100%;
   overflow-x: hidden;
 }
+
+/* ===========================================
+   LOGIN WRAPPER (PERFECT CENTER)
+=========================================== */
 .login-wrap {
   width: 100%;
-  max-height: 100vh;
+  min-height: 100vh;       /* full screen height */
   display: flex;
-  justify-content: center;
-  align-items: top;
+  justify-content: center; /* center horizontally */
+  align-items: center;     /* center vertically */
   padding: 20px;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
-/* Login Card */
+/* ===========================================
+   LOGIN CARD (NATURAL WIDTH)
+=========================================== */
 .login-box {
   background: rgba(15, 20, 32, 0.75);
   backdrop-filter: blur(12px);
   padding: 35px 40px;
   border-radius: 14px;
   box-sizing: border-box;
-  width: 100%;
-  max-width: 380px;
+
+  width: auto;            /* ❗ NOT full width */
+  max-width: 380px;       /* limit only (desktop) */
+  margin: 0 auto;         /* safety centering */
+
   border: 1px solid rgba(0, 255, 170, 0.1);
-  box-shadow: 0 0 25px rgba(0, 255, 170, 0.1), inset 0 0 10px rgba(0, 255, 120, 0.05);
+  box-shadow: 0 0 25px rgba(0, 255, 170, 0.1),
+              inset 0 0 10px rgba(0, 255, 120, 0.05);
+
   animation: fadeIn 0.35s ease-in-out;
 }
 
+/* Title */
 .login-box h2 {
   text-align: center;
   margin-bottom: 25px;
@@ -36,7 +50,9 @@ html, body {
   text-shadow: 0 0 10px rgba(0, 255, 170, 0.4);
 }
 
-/* Inputs */
+/* ===========================================
+   INPUT FIELDS
+=========================================== */
 .login-box input {
   width: 100%;
   padding: 12px;
@@ -55,7 +71,9 @@ html, body {
   box-shadow: 0 0 12px rgba(0, 255, 170, 0.4);
 }
 
-/* Login button */
+/* ===========================================
+   BUTTON
+=========================================== */
 .login-box button {
   width: 100%;
   padding: 12px;
@@ -85,8 +103,24 @@ html, body {
   cursor: not-allowed;
 }
 
-/* Fade animation */
+/* ===========================================
+   FADE ANIMATION
+=========================================== */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===========================================
+   MOBILE RESPONSIVE
+=========================================== */
+@media (max-width: 480px) {
+  .login-wrap {
+    padding: 10px;
+  }
+
+  .login-box {
+    padding: 25px 22px;
+    max-width: 340px;   /* smaller on mobile */
+  }
 }
