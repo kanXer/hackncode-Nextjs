@@ -8,8 +8,6 @@ import { Analytics } from "@vercel/analytics/next"
 import "./globals.css";
 import "./components/assets/header.css";
 import "./components/assets/globalLoader.css";
-import "./assets/home.css";
-import "./news/assets/styles.css";
 
 import LoaderWrapper from "./components/LoaderWrapper";
 import HeaderWrapper from "./components/HeaderWrapper";
@@ -50,3 +48,4 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
