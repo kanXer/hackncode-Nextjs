@@ -1,6 +1,14 @@
 /* ============================================
    PAGE WRAPPER (dark + light compatible)
 ============================================ */
+html, body {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+.news-wrapper {
+  overflow-x: hidden !important;
+}
 .news-wrapper {
   padding: 30px 14px;
   min-height: 100vh;
@@ -205,4 +213,5 @@ body.light .img-mid {
   .news-content { font-size: 15px; }
   .feature-img-full { border-radius: 16px; }
 }
+
 
