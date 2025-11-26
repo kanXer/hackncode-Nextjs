@@ -13,7 +13,7 @@ import LatestPosts from "./components/LatestPosts";
 export default function HomePage() {
   return (
     <>
-      <div className="container">
+      <div className="containor">
 
         {/* HERO */}
         <section className="hero">
@@ -108,5 +108,6 @@ export default function HomePage() {
     </>
   );
             }
+
 
 
