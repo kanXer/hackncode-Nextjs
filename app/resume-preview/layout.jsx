@@ -19,7 +19,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "https://hackncode.live/resume-preview.jpeg",
+        url: "https://hackncode.live/logo.jpeg",
         width: 1200,
         height: 630,
         alt: "KanXer OSINT — OSINT Lookup Tool",
@@ -38,4 +38,5 @@ export const metadata = {
 export default function ResumePreviewLayout({ children }) {
   return <>{children}</>;
 }
+
 
