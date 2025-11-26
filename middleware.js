@@ -6,25 +6,25 @@ export function middleware(req) {
 
   const isLoginPage = path === "/admin/login";
 
-  // ALLOW THESE APIs (NO REDIRECT)
+  // Allow auth APIs (NO redirect)
   const isAuthApi =
     path.startsWith("/api/admin/login") ||
     path.startsWith("/api/admin/logout") ||
     path.startsWith("/api/admin/check");
 
-  // 1️⃣ Allow login page and auth APIs
+  // 1️⃣ Allow login page and all admin auth APIs
   if (isLoginPage || isAuthApi) {
     return NextResponse.next();
   }
 
-  // 2️⃣ Protect admin UI pages
+  // 2️⃣ Protect admin pages
   if (path.startsWith("/admin")) {
     if (session !== "verified") {
       return NextResponse.redirect("/admin/login");
     }
   }
 
-  // 3️⃣ Protect admin APIs EXCEPT login/logout/check
+  // 3️⃣ Protect admin APIs (except auth APIs)
   if (path.startsWith("/api/admin")) {
     if (session !== "verified") {
       return NextResponse.json(
@@ -38,5 +38,8 @@ export function middleware(req) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/api/admin/:path*"],
+  matcher: [
+    "/admin/:path*",
+    "/api/admin/:path*"
+  ],
 };
