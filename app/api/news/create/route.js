@@ -5,51 +5,78 @@ import { uploadToCloudinary } from "@/lib/cloudinary";
 
 export const dynamic = "force-dynamic";
 
+// Function to auto-generate slug
+function generateSlug(title) {
+  const base = title
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+  const unique = Date.now().toString(36);
+  return `${base}-${unique}`;
+}
+
 export async function POST(req) {
   try {
     await connectDB();
     const form = await req.formData();
 
+    /* ===== BASIC FIELDS ===== */
     const title = form.get("title");
-    const slug = form.get("slug");
     const content = form.get("content");
     const youtube_url = form.get("youtube_url") || "";
+
+    if (!title || !content) {
+      return NextResponse.json({
+        success: false,
+        error: "Title and content required",
+      });
+    }
+
+    /* ===== AUTO SLUG ===== */
+    const slug = generateSlug(title);
 
     /* ===== CATEGORY ===== */
     let category = form.get("category")?.toLowerCase()?.trim();
     if (!category) category = "general";
+
     category = category.replace(/[^a-z0-9_-]/g, "");
     if (category.length === 0) category = "general";
 
-    /* ===== AUTHOR NAME ===== */
-    let author_name = form.get("user_name")?.trim();
-    if (!author_name) author_name = "Sahil Srivastava(KanXer)";
+    /* ===== DEFAULT AUTHOR ===== */
+    const author_name = "Sahil Srivastava (KanXer)";
+    let author_image = "/logo.jpeg";
 
-    /* ===== FEATURE IMAGE ===== */
-    const featureFile = form.get("feature_image");
-    if (!featureFile || featureFile.size === 0) {
-      return NextResponse.json({ success: false, error: "Feature image missing" });
+    /* ===== AUTHOR IMAGE OPTIONAL ===== */
+    const authorFile = form.get("user_image");
+    if (authorFile && authorFile.size > 0) {
+      author_image = await uploadToCloudinary(authorFile, "hackncode/authors");
     }
 
-    const feature_image = await uploadToCloudinary(featureFile, "hackncode/feature");
+    /* ===== FEATURE IMAGE REQUIRED ===== */
+    const featureFile = form.get("feature_image");
+    if (!featureFile || featureFile.size === 0) {
+      return NextResponse.json({
+        success: false,
+        error: "Feature image missing",
+      });
+    }
 
-    /* ===== GALLERY IMAGES ===== */
+    const feature_image = await uploadToCloudinary(
+      featureFile,
+      "hackncode/feature"
+    );
+
+    /* ===== GALLERY OPTIONAL ===== */
     const galleryFiles = form.getAll("images");
     const images = [];
 
     for (const file of galleryFiles) {
       if (!file || file.size === 0) continue;
+
       const url = await uploadToCloudinary(file, "hackncode/gallery");
       images.push(url);
-    }
-
-    /* ===== AUTHOR IMAGE ===== */
-    let author_image;
-    const authorFile = form.get("user_image");
-    if (authorFile && authorFile.size > 0) {
-      author_image = await uploadToCloudinary(authorFile, "hackncode/authors");
-    } else {
-      author_image = "/logo.jpeg";
     }
 
     /* ===== SAVE TO DB ===== */
@@ -59,13 +86,13 @@ export async function POST(req) {
       content,
       youtube_url,
       category,
-      author_name,
-      author_image,
+      author_name, // always auto
+      author_image, // always auto
       feature_image,
       images,
     });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, slug });
 
   } catch (err) {
     console.log("UPLOAD ERROR:", err);
