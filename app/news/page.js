@@ -1,32 +1,27 @@
 // ==============================
-// File: src/app/news/page.jsx
-// Server component for News List (Next.js App Router)
+// NEWS LIST PAGE (100% NO-CACHE)
 // ==============================
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
 
 import { connectDB } from "@/lib/mongo";
 import { News } from "@/lib/models/News";
 import NewsFilter from "@/app/components/NewsFilter";
 import NewsCard from "@/app/components/NewsCard";
-import "./assets/styles.css"
-
-export const revalidate = 30;
+import "./assets/styles.css";
 
 export default async function NewsPage({ searchParams }) {
-  const params = await searchParams;
-  const category = params?.cat || "all";
+  const category = searchParams?.cat || "all";
 
   await connectDB();
 
   const filter = category !== "all" ? { category } : {};
 
-  const newsList = JSON.parse(
-    JSON.stringify(
-      await News.find(filter)
-        .sort({ _id: -1 })
-        .limit(100)
-        .lean()
-    )
-  );
+  const newsList = await News.find(filter)
+    .sort({ _id: -1 })
+    .lean();
 
   const categories = await News.distinct("category");
 
@@ -52,6 +47,4 @@ export default async function NewsPage({ searchParams }) {
       </div>
     </div>
   );
-}
-
-
+          }
