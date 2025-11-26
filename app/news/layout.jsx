@@ -1,4 +1,3 @@
-import "./assets/styles.css";
 export const metadata = {
   title: "Latest Tech & Cyber News | KanXer News",
   description:
@@ -50,3 +49,4 @@ export const metadata = {
 export default function NewsLayout({ children }) {
   return <>{children}</>;
 }
+
