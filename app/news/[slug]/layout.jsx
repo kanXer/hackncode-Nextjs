@@ -1,6 +1,5 @@
 import { connectDB } from "@/lib/mongo";
 import { News } from "@/lib/models/News";
-import "./assets/styles.css";
 export async function generateMetadata({ params }) {
   const { slug } = await params;
 
@@ -62,3 +61,4 @@ export async function generateMetadata({ params }) {
 export default function NewsDetailLayout({ children }) {
   return <>{children}</>;
 }
+
