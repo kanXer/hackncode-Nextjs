@@ -1,3 +1,11 @@
+// ======================================
+// NEWS DETAIL PAGE (100% NO-CACHE)
+// ======================================
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
+
 import { splitHTMLIntoBlocks } from "@/lib/splitHtml";
 import { connectDB } from "@/lib/mongo";
 import { News } from "@/lib/models/News";
@@ -5,8 +13,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 
 export default async function NewsDetail({ params }) {
-  const p = await params;
-  const { slug } = p;
+  const { slug } = params;
 
   await connectDB();
   const news = await News.findOne({ slug }).lean();
@@ -21,29 +28,27 @@ export default async function NewsDetail({ params }) {
 
   let inserted = 0;
 
-  // 🔥 FEATURE IMAGE (direct cloudinary url)
   const featureImg = news.feature_image || "/preview.jpg";
 
   return (
     <main className="news-wrapper">
       <div className="news-card-kanxer">
 
-        {/* BACK BUTTON */}
         <Link href="/news" className="back-btn">
           ← Back to News
         </Link>
 
-        {/* TITLE */}
         <h1 className="news-title">{news.title}</h1>
         {news.short_description && (
           <p className="news-short-desc">{news.short_description}</p>
-        )}   
+        )}
+
         <img
           src={featureImg}
           className="feature-img-full"
           alt={news.title}
-        />       
-        {/* AUTHOR INFO */}
+        />
+
         <div className="detail-meta">
           <img
             src={news.author_image || "/logo.jpeg"}
@@ -60,13 +65,6 @@ export default async function NewsDetail({ params }) {
           </span>
         </div>
 
-        {/* SHORT DESCRIPTION */}
-
-
-        {/* FEATURE IMAGE */}
-
-
-        {/* YOUTUBE VIDEO */}
         {news.youtube_url && (
           <div className="yt-box">
             <iframe
@@ -78,12 +76,10 @@ export default async function NewsDetail({ params }) {
           </div>
         )}
 
-        {/* MAIN CONTENT + AUTO-PLACED IMAGES */}
         <article className="news-content">
           {blocks.map((block, index) => {
             const out = [];
 
-            // HTML text block
             out.push(
               <div
                 key={`b-${index}`}
@@ -91,15 +87,13 @@ export default async function NewsDetail({ params }) {
               />
             );
 
-            // calculated position for gallery images
             const expected = Math.round(((index + 1) / totalBlocks) * totalImages);
 
-            // insert gallery images
             while (inserted < expected && inserted < totalImages) {
               out.push(
                 <img
                   key={`img-${inserted}`}
-                  src={images[inserted]}      // 🔥 cloudinary image direct
+                  src={images[inserted]}
                   className="img-mid"
                   alt=""
                 />
@@ -114,11 +108,10 @@ export default async function NewsDetail({ params }) {
             );
           })}
 
-          {/* leftover gallery images */}
           {images.slice(inserted).map((img, i) => (
             <img
               key={`extra-${i}`}
-              src={img}   // 🔥 cloudinary url
+              src={img}
               className="img-mid"
               alt=""
             />
