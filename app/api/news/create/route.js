@@ -11,7 +11,6 @@ export async function POST(req) {
     const form = await req.formData();
 
     const title = form.get("title");
-    const short_description = form.get("short_description");
     const slug = form.get("slug");
     const content = form.get("content");
     const youtube_url = form.get("youtube_url") || "";
@@ -88,3 +87,4 @@ export async function POST(req) {
     return NextResponse.json({ success: false, error: err.message });
   }
 }
+
