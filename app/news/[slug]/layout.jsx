@@ -1,4 +1,4 @@
-import "./assets/styles.css
+import "./assets/styles.css";
 import { connectDB } from "@/lib/mongo";
 import { News } from "@/lib/models/News";
 export async function generateMetadata({ params }) {
@@ -62,5 +62,6 @@ export async function generateMetadata({ params }) {
 export default function NewsDetailLayout({ children }) {
   return <>{children}</>;
 }
+
 
 
