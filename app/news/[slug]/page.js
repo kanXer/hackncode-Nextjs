@@ -1,5 +1,5 @@
 // ======================================
-// NEWS DETAIL PAGE (FIXED VERSION)
+// NEWS DETAIL PAGE (100% FIXED)
 // ======================================
 
 export const dynamic = "force-dynamic";
@@ -13,21 +13,22 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 
 export default async function NewsDetail({ params }) {
-  console.log("🔵 News Detail Loaded:", params);
 
-  // ❗ FIX #1 — params को await मत करो
-  const slug = params.slug?.toLowerCase();
+  // ✅ FIX: params is a Promise → must be awaited
+  const { slug } = await params;
+
+  console.log("🔍 Final Slug:", slug);
 
   if (!slug) return notFound();
 
   await connectDB();
 
-  // ❗ FIX #2 — slug को lowercase करके findOne करो
-  const news = await News.findOne({ slug }).lean();
+  // ✅ FIX: lowercase matching
+  const news = await News.findOne({ slug: slug.toLowerCase() }).lean();
 
   if (!news) return notFound();
 
-  // Same code continues
+  // Split content into blocks
   const blocks = splitHTMLIntoBlocks(news.content || "");
   const images = Array.isArray(news.images) ? news.images : [];
 
@@ -36,37 +37,51 @@ export default async function NewsDetail({ params }) {
 
   let inserted = 0;
 
+  // Feature image fallback
   const featureImg = news.feature_image || "/preview.jpg";
 
   return (
     <main className="news-wrapper">
       <div className="news-card-kanxer">
 
+        {/* Back Button */}
         <Link href="/news" className="back-btn">
           ← Back to News
         </Link>
 
+        {/* Title */}
         <h1 className="news-title">{news.title}</h1>
+
+        {/* Short Description */}
         {news.short_description && (
           <p className="news-short-desc">{news.short_description}</p>
         )}
 
+        {/* Feature Image */}
         <img
           src={featureImg}
           className="feature-img-full"
           alt={news.title}
         />
 
+        {/* Author Info */}
         <div className="detail-meta">
           <img
             src={news.author_image || "/logo.jpeg"}
             className="detail-author-img"
             alt="author"
           />
-          <span className="detail-author-name">{news.author_name || "Unknown"}</span>
-          <span className="detail-author-time">{new Date(news.created_at).toLocaleDateString()}</span>
+
+          <span className="detail-author-name">
+            {news.author_name || "Unknown Author"}
+          </span>
+
+          <span className="detail-author-time">
+            {new Date(news.created_at).toLocaleDateString()}
+          </span>
         </div>
 
+        {/* YouTube Embed */}
         {news.youtube_url && (
           <div className="yt-box">
             <iframe
@@ -78,14 +93,20 @@ export default async function NewsDetail({ params }) {
           </div>
         )}
 
+        {/* Main Content */}
         <article className="news-content">
           {blocks.map((block, index) => {
             const out = [];
 
+            // Insert HTML block
             out.push(
-              <div key={`b-${index}`} dangerouslySetInnerHTML={{ __html: block }} />
+              <div
+                key={`b-${index}`}
+                dangerouslySetInnerHTML={{ __html: block }}
+              />
             );
 
+            // Auto-insert images between text
             const expected = Math.round(((index + 1) / totalBlocks) * totalImages);
 
             while (inserted < expected && inserted < totalImages) {
@@ -107,14 +128,17 @@ export default async function NewsDetail({ params }) {
             );
           })}
 
+          {/* leftover images */}
           {images.slice(inserted).map((img, i) => (
-            <img key={`extra-${i}`} src={img} className="img-mid" alt="" />
+            <img
+              key={`extra-${i}`}
+              src={img}
+              className="img-mid"
+              alt=""
+            />
           ))}
         </article>
-
       </div>
     </main>
   );
-                    }
-
-
+            }
