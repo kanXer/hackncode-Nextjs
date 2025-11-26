@@ -11,12 +11,14 @@ export async function POST(req) {
 
     const form = await req.formData();
 
+    // ❌ SLUG now read only, not editable
     const slug = form.get("slug");
+
     const title = form.get("title");
-    const short_description = form.get("short_description");
     const content = form.get("content");
     const youtube_url = form.get("youtube_url");
-    const user_name = form.get("user_name");
+
+    // ❌ Force protected fields (never update)
     const removeImages = JSON.parse(form.get("remove_images") || "[]");
 
     // Fetch existing post
@@ -26,7 +28,7 @@ export async function POST(req) {
     }
 
     /* =============================
-       DELETE OLD GALLERY IMAGES
+       DELETE SELECTED GALLERY
     ============================== */
     let updatedGallery = [...news.images];
 
@@ -39,7 +41,7 @@ export async function POST(req) {
     }
 
     /* =============================
-       REPLACE FEATURE IMAGE?
+       UPDATE FEATURE IMAGE
     ============================== */
     if (form.get("feature_image")?.size > 0) {
       if (news.feature_image) {
@@ -62,22 +64,23 @@ export async function POST(req) {
 
     for (const file of galleryFiles) {
       if (file && file.size > 0) {
-        const uploaded = await uploadToCloudinary(
-          file,
-          "hackncode/gallery"
-        );
+        const uploaded = await uploadToCloudinary(file, "hackncode/gallery");
         updatedGallery.push(uploaded);
       }
     }
 
     /* =============================
-       UPDATE TEXT FIELDS
+       UPDATE ONLY ALLOWED FIELDS
     ============================== */
+
     news.title = title;
-    news.short_description = short_description;
     news.content = content;
     news.youtube_url = youtube_url;
-    news.author_name = user_name;
+
+    // ❌ PROTECTED — DO NOT UPDATE
+    // news.short_description = short_description;
+    // news.author_name = user_name;
+
     news.images = updatedGallery;
 
     await news.save();
