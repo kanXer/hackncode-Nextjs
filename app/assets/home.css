@@ -1,22 +1,22 @@
-/* =============================
+/* ======================================================
    HOME PAGE CONTAINER
-============================= */
+====================================================== */
 .containor {
   max-width: 1200px;
   margin: 40px auto;
   padding: 24px;
   width: 100%;
+  overflow-x: hidden;
   box-sizing: border-box;
 }
 
-/* Prevent overflow */
-html, body, .containor {
+html, body {
   overflow-x: hidden !important;
 }
 
-/* =============================
+/* ======================================================
    HERO SECTION
-============================= */
+====================================================== */
 .hero {
   display: grid;
   grid-template-columns: 1fr 22rem;
@@ -30,99 +30,107 @@ html, body, .containor {
   }
 }
 
-/* =============================
+/* ======================================================
    INTRO CARD
-============================= */
+====================================================== */
 .card.intro {
   padding: 2rem 1.5rem;
-  border-radius: 18px;
+  border-radius: 20px;
   background: var(--panel);
   border: 1px solid rgba(20,184,102,0.12);
-  box-shadow: 0 0 25px rgba(20,184,102,0.15);
+  box-shadow: 0 0 20px rgba(20,184,102,0.2);
   backdrop-filter: blur(8px);
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   text-align: center;
 }
 
 .card.intro h2 {
-  font-size: 2rem;
   margin: 0;
+  font-size: 1.9rem;
   color: var(--accent);
 }
 
 .card.intro p {
-  max-width: 600px;
   color: var(--muted);
+  font-size: 1rem;
+  max-width: 600px;
+  margin: 12px auto;
   line-height: 1.6;
 }
 
-/* =============================
-   SKILLS
-============================= */
+/* ======================================================
+   SKILLS TAGS
+====================================================== */
 .skills {
-  margin-top: 1rem;
   display: flex;
+  gap: 0.45rem;
   flex-wrap: wrap;
-  gap: 0.5rem;
   justify-content: center;
+  margin-top: 0.75rem;
 }
 
 .skill {
-  padding: 6px 10px;
-  background: var(--glass);
-  border-radius: 8px;
-  color: var(--muted);
+  padding: 6px 11px;
   font-size: 0.85rem;
-  border: 1px solid rgba(255,255,255,0.05);
+  background: var(--glass);
+  color: var(--muted);
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.07);
 }
 
-/* =============================
-   BUTTON
-============================= */
+/* ======================================================
+   PREMIUM BUTTONS (Resume / View Projects)
+====================================================== */
 .btn {
-  margin-top: 1rem;
-  display: inline-block;
-  padding: 10px 20px;
-  border-radius: 10px;
-  background: var(--accent);
-  color: #fff;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 12px 22px;
+  border-radius: 12px;
+
+  background: linear-gradient(90deg, #14b866, #0fa86a);
+  color: white;
+  font-weight: 700;
   text-decoration: none;
-  transition: 0.2s;
+
+  box-shadow: 0 4px 18px rgba(20,184,102,0.25);
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
 }
 
 .btn:hover {
-  opacity: 0.9;
-  transform: scale(1.03);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 26px rgba(20,184,102,0.35);
+  opacity: 0.95;
 }
 
-/* Light mode button */
+/* Light Mode Button */
 body.light .btn {
-  background: #000;
-  color: #fff;
+  background: #000 !important;
+  color: #fff !important;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.3);
 }
 
-/* =============================
+/* ======================================================
    PROFILE CARD
-============================= */
-.profile {
+====================================================== */
+.card.profile {
   padding: 1.6rem;
-  border-radius: 18px;
+  border-radius: 20px;
   background: var(--panel);
   border: 1px solid rgba(20,184,102,0.12);
-  box-shadow: 0 0 25px rgba(20,184,102,0.15);
+  box-shadow: 0 0 20px rgba(20,184,102,0.2);
   text-align: center;
 }
 
 .avatar {
-  width: 7rem;
-  height: 7rem;
-  border-radius: 12px;
+  width: 7.2rem;
+  height: 7.2rem;
+  border-radius: 16px;
   overflow: hidden;
-  border: 2px solid rgba(20,184,102,0.3);
-  margin-bottom: 12px;
+  border: 3px solid rgba(20,184,102,0.3);
+  margin: 0 auto 12px auto;
 }
 
 .avatar img {
@@ -132,41 +140,44 @@ body.light .btn {
 }
 
 .profile .meta p {
-  margin: 0;
   color: var(--muted);
+  margin: 2px 0;
 }
 
-/* =============================
+/* ======================================================
    PROJECTS GRID
-============================= */
+====================================================== */
 .projects {
-  margin-top: 2rem;
   display: grid;
-  gap: 1.2rem;
   grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
 .project {
-  text-decoration: none;
   padding: 1rem;
-  border-radius: 14px;
   background: var(--panel);
+  border-radius: 16px;
   border: 1px solid rgba(20,184,102,0.12);
-  color: var(--muted);
   text-align: center;
-  transition: 0.2s;
+  text-decoration: none;
+  color: var(--muted);
+  transition: 0.25s;
 }
 
 .project:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0 20px rgba(20,184,102,0.25);
+  transform: translateY(-3px);
+  box-shadow: 0 0 18px rgba(20,184,102,0.25);
 }
 
-/* =============================
-   LATEST POSTS GRID
-============================= */
+/* ======================================================
+   LATEST POSTS
+====================================================== */
+.latest-posts {
+  margin-top: 2.5rem;
+}
+
 .latest-post-grid {
-  margin-top: 2rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 1rem;
@@ -174,8 +185,8 @@ body.light .btn {
 
 .latest-post-card {
   background: var(--panel);
-  padding: 14px;
-  border-radius: 12px;
+  padding: 16px;
+  border-radius: 16px;
   border: 1px solid rgba(20,184,102,0.12);
   transition: 0.25s;
   text-decoration: none;
@@ -183,15 +194,15 @@ body.light .btn {
 }
 
 .latest-post-card:hover {
-  transform: translateY(-4px);
   border-color: var(--accent);
+  transform: translateY(-3px);
   color: white;
 }
 
 .latest-post-card .thumb {
   height: 140px;
+  border-radius: 12px;
   overflow: hidden;
-  border-radius: 10px;
   margin-bottom: 10px;
 }
 
@@ -201,14 +212,33 @@ body.light .btn {
   object-fit: cover;
 }
 
-/* =============================
-   CONTACT SECTION
-============================= */
+.latest-post-card p {
+  margin-top: 6px;
+  font-size: 0.87rem;
+}
+
+/* ======================================================
+   CONTACT FORM — PREMIUM UI
+====================================================== */
+.contact-section {
+  margin-top: 2.8rem;
+  padding: 28px;
+  border-radius: 20px;
+  background: var(--panel);
+  border: 1px solid rgba(20,184,102,0.15);
+  box-shadow: 0 0 25px rgba(20,184,102,0.25);
+}
+
+.contact-section h2 {
+  font-size: 1.8rem;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
 .contact-grid {
-  margin-top: 2rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
 @media (max-width: 760px) {
@@ -217,30 +247,89 @@ body.light .btn {
   }
 }
 
-/* Contact form input */
-input, textarea {
-  width: 100%;
-  padding: 10px;
-  border-radius: 10px;
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.1);
-  color: inherit;
+form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 700;
+  color: var(--accent);
 }
 
+form input,
+form textarea {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: inherit;
+  outline: none;
+  transition: 0.25s;
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 12px rgba(20,184,102,0.4);
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Light mode inputs */
 body.light input,
 body.light textarea {
-  color: #000;
+  background: #ffffff;
   border-color: #ccc;
+  color: #000;
 }
 
-/* =============================
-   MOBILE FIX
-============================= */
-@media (max-width: 600px) {
-  .btn {
-    width: 100%;
-  }
-  .card.intro h2 {
-    font-size: 1.6rem;
-  }
+/* ERROR BOX */
+.api-error-box {
+  background: rgba(255, 0, 0, 0.1);
+  padding: 12px 14px;
+  border-radius: 10px;
+  border-left: 4px solid red;
+  color: #ff9e9e;
+  margin-bottom: 14px;
 }
+
+/* Right Side Contact Card */
+.contact-info-card {
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(20,184,102,0.12);
+  text-align: center;
+}
+
+body.light .contact-info-card {
+  background: #fff;
+  border-color: #ddd;
+}
+
+.contact-info-card p {
+  color: var(--muted);
+  margin: 4px 0;
+}
+
+/* Social Icons */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 26px;
+  margin-top: 10px;
+}
+
+.social-icons a {
+  font-size: 1.8rem;
+  color: var(--accent);
+  transition: 0.25s;
+}
+
+.social-icons a:hover {
+  transform: scale(1.15);
+  opacity: 0.7;
+   }
