@@ -11,27 +11,60 @@ import HeaderWrapper from "./components/HeaderWrapper";
 import FooterWrapper from "./components/FooterWrapper";
 
 export const metadata = {
-  title: "KanXer OSINT — Intelligence Tools, Cyber Lookup & Investigations",
-  description:
-    "KanXer OSINT is a modern intelligence toolkit offering phone lookup, email OSINT, ID search, breach data checks, and cyber investigation tools.",
+  metadataBase: new URL("https://hackncode.live"),
 
-  applicationName: "KanXer OSINT",
+  title: {
+    default: "KanXer OSINT — Cyber Intelligence & Investigation Toolkit",
+    template: "%s | KanXer OSINT"
+  },
+
+  description:
+    "KanXer OSINT is an advanced cyber intelligence toolkit offering phone lookup, email OSINT, ID search, breach data scans, and digital investigation tools.",
+
   keywords: [
-    "OSINT",
-    "KanXer",
-    "Cybersecurity",
-    "Phone Lookup",
+    "OSINT Tools",
+    "KanXer OSINT",
+    "Cyber Intelligence",
+    "Phone Lookup OSINT",
     "Email Lookup",
-    "Dox Tools",
-    "Cyber Tools",
-    "Investigation Tools",
+    "Data Breach Check",
+    "Cybersecurity Tools",
+    "Digital Investigation",
+    "Hackncode"
   ],
 
+  applicationName: "KanXer OSINT",
+
   alternates: {
-    canonical: "https://hackncode.live/",
+    canonical: "/",
+  },
+
+  openGraph: {
+    title: "KanXer OSINT — Cyber Intelligence Toolkit",
+    description:
+      "Powerful OSINT tools for cyber investigations, phone lookups, email checks, breach scans and identity tracing.",
+    url: "https://hackncode.live",
+    siteName: "KanXer OSINT",
+    images: [
+      {
+        url: "/preview.jpg",
+        width: 1200,
+        height: 630,
+        alt: "KanXer OSINT Preview",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "KanXer OSINT — Cyber Investigation Tools",
+    description:
+      "Phone lookup, email OSINT, identity scans, breach checks and more.",
+    images: ["/preview.jpg"],
   },
 };
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -63,6 +96,7 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
 
 
 
