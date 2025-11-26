@@ -212,7 +212,7 @@ body.light .btn {
 }
 
 .latest-post-card:hover {
-  border-color: var(--accent);
+  border-color: var(--panel);
   transform: translateY(-3px);
   color: white;
 }
@@ -391,3 +391,4 @@ body.light .contact-info-card {
   transform: scale(1.15);
   opacity: 0.7;
 }
+
