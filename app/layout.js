@@ -36,21 +36,23 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* FontAwesome for icons */}
+        {/* FontAwesome (FAB + Solid) */}
         <link
           rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-          integrity="sha512-ymN3zFkF64ZtDfnHV5YwIGlEyg5AJ9Ibz1C1q5T65eQG4EuhHj7i0DlRLHtbXYmFZV8oPZxW++R0YhZ14R/2Jw=="
-          crossOrigin="anonymous"
-          referrerPolicy="no-referrer"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/fontawesome.min.css"
         />
-        
-        {/* Website Favicon */}
         <link
-          rel="icon"
-          href="/logo.jpeg"
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/brands.min.css"
         />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/solid.min.css"
+        />
+
+        <link rel="icon" href="/logo.jpeg" />
       </head>
+
       <body>
         <LoaderWrapper />
         <HeaderWrapper />
@@ -61,6 +63,7 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
 
 
 
