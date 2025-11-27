@@ -1,25 +1,28 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 export default function NewsFilter({ categories, selected }) {
-  // Remove duplicates + sort cleanly
+  const router = useRouter();
   const uniqueCats = [...new Set(categories)];
 
-  return (
-    <form>
-      <select
-        name="cat"
-        defaultValue={selected}
-        className="news-filter-select"
-        onChange={(e) => e.target.form.submit()}
-      >
-        <option value="all">All</option>
+  function changeCat(cat) {
+    router.push(`/news?cat=${cat}`, { scroll: false });
+  }
 
-        {uniqueCats.map((c, i) => (
-          <option key={i} value={c}>
-            {c.toUpperCase()}
-          </option>
-        ))}
-      </select>
-    </form>
+  return (
+    <select
+      defaultValue={selected}
+      className="news-filter-select"
+      onChange={(e) => changeCat(e.target.value)}
+    >
+      <option value="all">All</option>
+
+      {uniqueCats.map((c) => (
+        <option key={c} value={c}>
+          {c.toUpperCase()}
+        </option>
+      ))}
+    </select>
   );
 }
