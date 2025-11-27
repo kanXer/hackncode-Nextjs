@@ -1,0 +1,364 @@
+/* ============================================
+   TOP NAVIGATION
+============================================ */
+.admin-nav {
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 14px 26px;
+  background: var(--glass);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 300;
+}
+
+.nav-item,
+.logout-btn {
+  margin: 10px;
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 300;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.nav-item:hover {
+  background: rgba(34,197,94,0.18);
+  color: var(--accent);
+}
+
+.nav-item.active {
+  background: rgba(34,197,94,0.25);
+  color: var(--accent);
+}
+
+/* ============================================
+   DASHBOARD LAYOUT
+============================================ */
+.dashboard-wrapper {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+  color: var(--text);
+  text-align: center;
+}
+
+.dashboard-title {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+/* ============================================
+   CATEGORY TAG STRIP
+============================================ */
+.category-strip {
+  background: var(--glass);
+  padding: 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 25px;
+}
+
+.block-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+/* Horizontal scroll row */
+.tag-row {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.tag-row::-webkit-scrollbar {
+  height: 6px;
+}
+
+.tag-row::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 8px;
+}
+
+/* Tag item */
+.tag-item-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.tag-item {
+  padding: 8px 15px;
+  background: rgba(0,0,0,0.7);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: 0.25s;
+}
+
+.tag-item:hover {
+  background: rgba(255,255,255,0.12);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.tag-item-wrapper.active .tag-item {
+  background: var(--accent);
+  color: #000;
+  font-weight: 700;
+}
+
+/* Delete cross */
+.tag-delete {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ef4444;
+  color: #fff;
+  padding: 3px 6px;
+  border-radius: 50%;
+  font-size: 10px;
+  opacity: 0;
+  pointer-events: none;
+  border: none;
+  transition: 0.2s;
+}
+
+.tag-item-wrapper:hover .tag-delete {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Add category inline */
+.add-cat-box.inline {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.add-cat-box.inline input {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.08);
+  color: var(--text);
+}
+
+.add-cat-box.inline button {
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #ffffff;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+}
+
+.add-cat-box.inline button:hover {
+  opacity: 0.85;
+}
+
+/* ============================================
+   NEWS / OSINT BOXES
+============================================ */
+.scroll-box {
+  max-height: 420px;
+  overflow-y: auto;
+  background: var(--glass);
+  border-radius: 16px;
+  padding: 18px;
+  border: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.scroll-box::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll-box::-webkit-scrollbar-thumb {
+  background: #22c55e;
+  border-radius: 20px;
+}
+
+/* Row items */
+.row-item {
+  background: rgba(255,255,255,0.04);
+  padding: 16px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.row-text h4 {
+  margin: 0;
+  font-size: 17px;
+}
+
+.row-text p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.row-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* BACKDROP */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 9999;
+}
+
+/* POPUP BOX */
+.popup-box {
+  background: #111;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 14px;
+  width: 95%;
+  max-width: 600px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  animation: popupIn .2s ease-out;
+}
+
+/* TITLE */
+.popup-title {
+  margin: 0;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* JSON SCROLL AREA */
+.popup-content {
+  background: #000;
+  padding: 14px;
+  border-radius: 8px;
+  overflow-y: auto;
+  max-height: 60vh;
+  scrollbar-width: thin;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* JSON TEXT */
+.popup-content pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: #0f0;
+  font-size: 13px;
+}
+
+/* CLOSE BUTTON */
+.popup-close {
+  background: #d00;
+  border: none;
+  padding: 10px 16px;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.popup-close:hover {
+  background: #f00;
+}
+
+/* Animation */
+@keyframes popupIn {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.btn-edit { background: #22c55e; }
+.btn-delete { background: #ef4444; }
+.btn-view { background: #3b82f6; }
+
+.btn-edit,
+.btn-delete,
+.btn-view {
+  padding: 8px 14px;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  border: none;
+  font-size: 13px;
+}
+
+.create-btn {
+  margin-top: 20px;
+  display: inline-block;
+  background: #22c55e;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+/* OSINT search/filter */
+.osint-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.osint-search,
+.osint-filter {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text);
+}
+
+/* ============================================
+   MOBILE FIXES
+============================================ */
+@media (max-width: 600px) {
+  .row-item {
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
+  }
+
+  .tag-row {
+    gap: 8px;
+  }
+}
+
+
