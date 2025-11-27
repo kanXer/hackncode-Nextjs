@@ -4,17 +4,16 @@ import { useRouter } from "next/navigation";
 
 export default function NewsFilter({ categories, selected }) {
   const router = useRouter();
-  const uniqueCats = [...new Set(categories)];
 
-  function changeCat(cat) {
-    router.push(`/news?cat=${cat}`, { scroll: false });
-  }
+  const uniqueCats = [...new Set(categories.map(c => c.toLowerCase()))];
 
   return (
     <select
-      defaultValue={selected}
+      defaultValue={selected.toLowerCase()}
       className="news-filter-select"
-      onChange={(e) => changeCat(e.target.value)}
+      onChange={(e) => {
+        router.push(`/news?cat=${e.target.value.toLowerCase()}`, { scroll: false });
+      }}
     >
       <option value="all">All</option>
 
