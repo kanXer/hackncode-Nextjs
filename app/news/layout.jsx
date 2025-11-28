@@ -30,7 +30,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "https://hackncode.live/news-preview.jpg",
+        url: "https://hackncode.live/preview.jpg",
         width: 1200,
         height: 630,
         alt: "KanXer News Preview",
@@ -43,7 +43,7 @@ export const metadata = {
     title: "Latest Tech & Cyber News | KanXer",
     description:
       "Explore the latest tech updates, cybersecurity alerts, OSINT news, and KanXer exclusive articles.",
-    images: ["https://hackncode.live/news-preview.jpg"],
+    images: ["https://hackncode.live/preview.jpg"],
     creator: "@KanXerOfficial",
   },
 };
@@ -51,6 +51,7 @@ export const metadata = {
 export default function NewsLayout({ children }) {
   return <>{children}</>;
 }
+
 
 
 
