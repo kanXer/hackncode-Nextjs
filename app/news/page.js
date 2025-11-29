@@ -27,7 +27,7 @@ export default async function NewsPage({ searchParams }) {
           <h2 className="page-heading">Latest News</h2>
 
           <div className="filter-wrap">
-            <NewsFilter categories={categories} selected={category} />
+            <NewsFilter categories={categories} />
           </div>
         </div>
 
@@ -44,3 +44,4 @@ export default async function NewsPage({ searchParams }) {
     </div>
   );
 }
+
