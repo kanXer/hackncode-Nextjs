@@ -1,0 +1,188 @@
+/* GENERAL */
+.ig-bg {
+  min-height: 100vh;
+  background: #fafafa;
+}
+
+.container {
+  padding: 20px;
+}
+
+/* TOP BAR */
+.ig-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 12px 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.ig-brand {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.search-wrap input {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.right .icon {
+  margin: 0 6px;
+  cursor: pointer;
+}
+
+.avatar {
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: #e91e63;
+  color: #fff;
+  border: none;
+}
+
+/* MAIN GRID */
+.ig-main {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 20px;
+}
+
+.ig-card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 14px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+/* PROFILE AREA */
+.profile-top {
+  display: flex;
+  gap: 12px;
+}
+
+.avatar-img {
+  width: 88px;
+  height: 88px;
+  border-radius: 16px;
+}
+
+.avatar-placeholder {
+  width: 88px;
+  height: 88px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #333;
+  color: #fff;
+  font-size: 32px;
+}
+
+.gain-form {
+  margin-top: 14px;
+}
+
+.ig-input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  border: 1px solid #ccc;
+}
+
+.ig-btn {
+  width: 100%;
+  padding: 8px;
+  background: #1976d2;
+  color: #fff;
+  border-radius: 10px;
+  border: none;
+}
+
+.recent-title {
+  margin-top: 18px;
+}
+
+/* ACTIVITY */
+.activity-list {
+  margin-top: 10px;
+}
+
+.act-row {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0;
+}
+
+.act-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #222;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.small-muted {
+  color: #777;
+  font-size: 12px;
+}
+
+/* POSTS */
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.post-avatar {
+  background: #111;
+  color: #fff;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.post-media {
+  width: 100%;
+  border-radius: 12px;
+  margin: 12px 0;
+}
+
+.post-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* RESPONSIVE FOR PHONES */
+@media (max-width: 768px) {
+  .ig-main {
+    grid-template-columns: 1fr;
+  }
+
+  .ig-topbar {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .search-wrap {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .avatar-img,
+  .avatar-placeholder {
+    width: 70px;
+    height: 70px;
+  }
+
+  .ig-card {
+    padding: 12px;
+  }
+}
