@@ -11,21 +11,17 @@ import "./assets/styles.css";
 export default async function NewsPage({ searchParams }) {
   await connectDB();
 
-  // Get category from URL
+  // Always normalize category from URL
   const rawCat = searchParams?.cat || "all";
+  const category = rawCat.toLowerCase().trim();
 
-  // Normalize category (same as DB format)
-  const category = rawCat.toLowerCase().trim().replace(/\s+/g, "-");
+  // Build DB filter
+  const filter = category === "all" ? {} : { category };
 
-  // Apply filter
-  const filter = category !== "all" ? { category } : {};
+  // Fetch news according to filter
+  const newsList = await News.find(filter).sort({ _id: -1 }).lean();
 
-  // Get posts
-  const newsList = await News.find(filter)
-    .sort({ _id: -1 })
-    .lean();
-
-  // Get available categories
+  // Get category list
   const categories = await News.distinct("category");
 
   return (
@@ -33,6 +29,7 @@ export default async function NewsPage({ searchParams }) {
       <div className="container">
         <div className="top-row">
           <h2 className="page-heading">Latest News</h2>
+
           <div className="filter-wrap">
             <NewsFilter categories={categories} selected={category} />
           </div>
