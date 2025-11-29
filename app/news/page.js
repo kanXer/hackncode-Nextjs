@@ -1,28 +1,24 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
+export const dynamicParams = true;   // ← ADD THIS LINE
 
-"use client";
-
-import { useSearchParams, useRouter } from "next/navigation";
-import useSWR from "swr";
+import { connectDB } from "@/lib/mongo";
+import { News } from "@/lib/models/News";
 import NewsFilter from "@/app/components/NewsFilter";
 import NewsCard from "@/app/components/NewsCard";
 import "./assets/styles.css";
 
-const fetcher = (url) => fetch(url).then((r) => r.json());
+export default async function NewsPage({ searchParams }) {
+  await connectDB();
 
-export default function NewsPage() {
-  const params = useSearchParams();
-  const router = useRouter();
+  const rawCat = searchParams?.cat || "all";
+  const category = rawCat.toLowerCase().trim();
 
-  const category = params.get("cat")?.toLowerCase() || "all";
+  const filter = category === "all" ? {} : { category };
 
-  const { data, isLoading } = useSWR(`/api/news?cat=${category}`, fetcher);
-
-  if (isLoading || !data) {
-    return <p className="loading">Loading...</p>;
-  }
-
-  const newsList = data.news;
-  const categories = data.categories;
+  const newsList = await News.find(filter).sort({ _id: -1 }).lean();
+  const categories = await News.distinct("category");
 
   return (
     <div className="news-wrapper news-list-page">
