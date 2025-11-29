@@ -1,17 +1,21 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function NewsFilter({ categories, selected }) {
+export default function NewsFilter({ categories }) {
   const router = useRouter();
+  const params = useSearchParams();
+
+  // Selected category always live from URL
+  const selected = params.get("cat")?.toLowerCase() || "all";
 
   const normalizedCats = [...new Set(categories.map(c => c.toLowerCase()))];
 
   return (
     <select
-      value={selected.toLowerCase()}
+      value={selected}
       onChange={(e) => {
-        const v = e.target.value.toLowerCase();
+        const v = e.target.value;
         if (v === "all") {
           router.push("/news", { scroll: false });
         } else {
