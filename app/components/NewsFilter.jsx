@@ -6,7 +6,7 @@ export default function NewsFilter({ categories }) {
   const router = useRouter();
   const params = useSearchParams();
 
-  // Selected category always live from URL
+  // Selected category always from URL (client side)
   const selected = params.get("cat")?.toLowerCase() || "all";
 
   const normalizedCats = [...new Set(categories.map(c => c.toLowerCase()))];
