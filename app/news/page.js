@@ -1,45 +1,41 @@
-export const dynamic = "error";   // ← ADD THIS LINE
+"use client";
 
-import { connectDB } from "@/lib/mongo";
-import { News } from "@/lib/models/News";
+import { useSearchParams } from "next/navigation";
 import NewsFilter from "@/app/components/NewsFilter";
 import NewsCard from "@/app/components/NewsCard";
+import useSWR from "swr";
 import "./assets/styles.css";
 
-export default async function NewsPage({ searchParams }) {
-  await connectDB();
+const fetcher = (url) => fetch(url).then((r) => r.json());
 
-  const rawCat = searchParams?.cat || "all";
-  const category = rawCat.toLowerCase().trim();
+export default function NewsPage() {
+  const params = useSearchParams();
+  const cat = params.get("cat")?.toLowerCase() || "all";
 
-  const filter = category === "all" ? {} : { category };
+  const { data, isLoading } = useSWR(`/api/news?cat=${cat}`, fetcher);
 
-  const newsList = await News.find(filter).sort({ _id: -1 }).lean();
-  const categories = await News.distinct("category");
+  if (isLoading || !data) return <p>Loading...</p>;
+
+  const { news, categories } = data;
 
   return (
     <div className="news-wrapper news-list-page">
       <div className="container">
         <div className="top-row">
           <h2 className="page-heading">Latest News</h2>
-
           <div className="filter-wrap">
             <NewsFilter categories={categories} />
           </div>
         </div>
 
         <div className="news-grid">
-          {newsList.map((post) => (
+          {news.map((post) => (
             <NewsCard key={post._id} post={post} />
           ))}
         </div>
 
-        {newsList.length === 0 && (
-          <p className="empty">No articles found in this category.</p>
-        )}
+        {news.length === 0 && <p className="empty">No articles found.</p>}
       </div>
     </div>
   );
-}
-
-
+        }
