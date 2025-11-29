@@ -6,27 +6,28 @@ export default function NewsFilter({ categories }) {
   const router = useRouter();
   const params = useSearchParams();
 
-  // Selected category always from URL (client side)
   const selected = params.get("cat")?.toLowerCase() || "all";
-
-  const normalizedCats = [...new Set(categories.map(c => c.toLowerCase()))];
+  const cats = [...new Set(categories.map(c => c.toLowerCase()))];
 
   return (
     <select
       value={selected}
       onChange={(e) => {
         const v = e.target.value;
+
         if (v === "all") {
-          router.push("/news", { scroll: false });
+          router.replace("/news");  // STATIC reload
         } else {
-          router.push(`/news?cat=${v}`, { scroll: false });
+          router.replace(`/news?cat=${v}`); // STATIC reload
         }
+
+        // 🔥 STATIC PAGES: force reload
+        window.location.reload();
       }}
       className="news-filter-select"
     >
-      <option value="all">All</option>
-
-      {normalizedCats.map((c) => (
+      <option value="all">ALL</option>
+      {cats.map(c => (
         <option key={c} value={c}>
           {c.toUpperCase()}
         </option>
