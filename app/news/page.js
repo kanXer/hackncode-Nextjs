@@ -1,7 +1,4 @@
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-export const fetchCache = "force-no-store";
-export const dynamicParams = true;   // ← ADD THIS LINE
+export const dynamic = "error";   // ← ADD THIS LINE
 
 import { connectDB } from "@/lib/mongo";
 import { News } from "@/lib/models/News";
@@ -44,4 +41,5 @@ export default async function NewsPage({ searchParams }) {
     </div>
   );
 }
+
 
