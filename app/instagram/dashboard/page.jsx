@@ -2,11 +2,11 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
+import "./assets/styles.css"; // <-- external CSS file
 
 export default function InstagramDashboardPage() {
   const router = useRouter();
 
-  // UI states
   const [loaded, setLoaded] = useState(false);
   const [username, setUsername] = useState("");
   const [instaName, setInstaName] = useState("");
@@ -14,17 +14,14 @@ export default function InstagramDashboardPage() {
   const [instaImage, setInstaImage] = useState("");
   const [followers, setFollowers] = useState(0);
   const [recent, setRecent] = useState([]);
-
   const counterRef = useRef(null);
 
-  // Format numbers like 1.2k
   const fmt = (n) => {
     if (n >= 1_000_000) return Math.round(n / 100_000) / 10 + "M";
     if (n >= 1000) return Math.round(n / 100) / 10 + "k";
     return String(n);
   };
 
-  // Load fake user session from localStorage
   useEffect(() => {
     const u = localStorage.getItem("insta_user");
     if (!u) return router.push("/instagram/");
@@ -49,27 +46,28 @@ export default function InstagramDashboardPage() {
     setInstaImage(img);
     setFollowers(savedFollowers);
 
-    // Generate 6 recent followers
-    const names = ["Rohan","Anjali","Priya","Amit","Neha","Vikram","Simran","Karan","Isha","Rahul"];
+    const names = [
+      "Rohan", "Anjali", "Priya", "Amit", "Neha", "Vikram",
+      "Simran", "Karan", "Isha", "Rahul"
+    ];
+
     setRecent(
       names.slice(0, 6).map((nm) => ({
         name: nm,
         handle: nm.toLowerCase() + Math.floor(Math.random() * 900),
-        since: Math.floor(Math.random() * 48) + 1
+        since: Math.floor(Math.random() * 48) + 1,
       }))
     );
 
     setLoaded(true);
   }, []);
 
-  // Counter refresh
   useEffect(() => {
     if (counterRef.current) {
       counterRef.current.innerText = fmt(followers);
     }
   }, [followers]);
 
-  // Fake growth every 20 sec
   useEffect(() => {
     if (!loaded) return;
 
@@ -79,27 +77,20 @@ export default function InstagramDashboardPage() {
       localStorage.setItem("followers", newVal);
       setFollowers(newVal);
 
-      // add new activity
       setRecent((prev) => [
-        {
-          name: "New Follower",
-          handle: "nf" + inc,
-          since: 0
-        },
-        ...prev
+        { name: "New Follower", handle: "nf" + inc, since: 0 },
+        ...prev,
       ]);
     }, 20000);
 
     return () => clearInterval(tick);
   }, [followers, loaded]);
 
-  // Logout clears only fake session
   const handleLogout = () => {
     localStorage.removeItem("insta_user");
     router.push("/instagram/");
   };
 
-  // Gain followers (manual)
   const handleGainSubmit = (e) => {
     e.preventDefault();
     const amount = Number(new FormData(e.target).get("amount"));
@@ -109,31 +100,12 @@ export default function InstagramDashboardPage() {
     localStorage.setItem("followers", newVal);
   };
 
-  // Avatar generator
   const renderAvatar = () => {
     if (instaImage)
-      return (
-        <img
-          src={instaImage}
-          className="avatar-img"
-          style={{ width: 88, height: 88, borderRadius: 16 }}
-        />
-      );
+      return <img src={instaImage} className="avatar-img" />;
 
     return (
-      <div
-        style={{
-          width: 88,
-          height: 88,
-          borderRadius: 16,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "#333",
-          color: "#fff",
-          fontSize: 32
-        }}
-      >
+      <div className="avatar-placeholder">
         {instaName.charAt(0).toUpperCase()}
       </div>
     );
@@ -141,19 +113,21 @@ export default function InstagramDashboardPage() {
 
   if (!loaded) return null;
 
-  // Sample posts
   const posts = Array.from({ length: 3 }).map((_, i) => ({
     img: `https://picsum.photos/id/${110 + i}/900/600`,
-    likes: Math.floor(Math.random() * 15000) + 200
+    likes: Math.floor(Math.random() * 15000) + 200,
   }));
 
   return (
-    <div className="ig-bg" style={{ minHeight: "100vh" }}>
+    <div className="ig-bg">
 
-      {/* ------------------ TOP BAR ------------------ */}
       <header className="ig-topbar">
         <div className="left"><div className="ig-brand">FollowersGain</div></div>
-        <div className="center search-wrap"><input placeholder="Search" /></div>
+
+        <div className="center search-wrap">
+          <input placeholder="Search" />
+        </div>
+
         <div className="right">
           <a className="icon">🏠</a>
           <a className="icon">✉️</a>
@@ -163,34 +137,22 @@ export default function InstagramDashboardPage() {
         </div>
       </header>
 
-      {/* ------------------ MAIN GRID ------------------ */}
-      <main
-        className="ig-main container"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "320px 1fr",
-          gap: 20,
-          padding: 20
-        }}
-      >
-        {/* LEFT PANEL */}
+      <main className="ig-main container">
+
         <aside className="left-col ig-card profile-card">
 
-          <div style={{ display: "flex", gap: 12 }}>
+          <div className="profile-top">
             {renderAvatar()}
-
             <div>
               <div className="pf-name">{instaName}</div>
               <div className="pf-handle">@{instaHandle}</div>
-              <div>
-                <span ref={counterRef} className="followers-counter">
-                  {fmt(followers)}
-                </span>
-              </div>
+              <span ref={counterRef} className="followers-counter">
+                {fmt(followers)}
+              </span>
             </div>
           </div>
 
-          <form onSubmit={handleGainSubmit} style={{ marginTop: 14 }}>
+          <form onSubmit={handleGainSubmit} className="gain-form">
             <input
               name="amount"
               type="number"
@@ -200,12 +162,13 @@ export default function InstagramDashboardPage() {
             <button className="ig-btn">Gain Followers</button>
           </form>
 
-          <h4 style={{ marginTop: 20 }}>Recent Activity</h4>
+          <h4 className="recent-title">Recent Activity</h4>
+
           <div className="activity-list">
             {recent.map((r, i) => (
               <div className="act-row" key={i}>
                 <div className="act-avatar">{r.name[0]}</div>
-                <div style={{ flex: 1 }}>
+                <div className="act-info">
                   <div>
                     {r.name} <span className="small-muted">@{r.handle}</span>
                   </div>
@@ -217,7 +180,6 @@ export default function InstagramDashboardPage() {
 
         </aside>
 
-        {/* RIGHT FEED */}
         <section className="feed-col">
           {posts.map((p, i) => (
             <div className="post ig-card" key={i}>
@@ -237,6 +199,7 @@ export default function InstagramDashboardPage() {
             </div>
           ))}
         </section>
+
       </main>
     </div>
   );
