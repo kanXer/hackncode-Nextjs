@@ -1,33 +1,29 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
-export default function NewsFilter({ categories }) {
+export default function NewsFilter({ categories, selected }) {
   const router = useRouter();
-  const params = useSearchParams();
 
-  const selected = params.get("cat") || "all";
-
-  const uniqueCats = [...new Set(categories.map(c => c.toLowerCase()))];
-
-  const handleChange = (e) => {
-    const value = e.target.value.toLowerCase();
-
-    const url = value === "all" ? "/news" : `/news?cat=${value}`;
-
-    router.push(url, { scroll: false });
-  };
+  const normalizedCats = [...new Set(categories.map(c => c.toLowerCase()))];
 
   return (
     <select
-      value={selected}
-      onChange={handleChange}
+      value={selected.toLowerCase()}
+      onChange={(e) => {
+        const v = e.target.value.toLowerCase();
+        if (v === "all") {
+          router.push("/news", { scroll: false });
+        } else {
+          router.push(`/news?cat=${v}`, { scroll: false });
+        }
+      }}
       className="news-filter-select"
     >
       <option value="all">All</option>
 
-      {uniqueCats.map((c) => (
-        <option key={c} value={c.toLowerCase()}>
+      {normalizedCats.map((c) => (
+        <option key={c} value={c}>
           {c.toUpperCase()}
         </option>
       ))}
