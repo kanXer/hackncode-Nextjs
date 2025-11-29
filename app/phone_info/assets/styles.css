@@ -79,6 +79,7 @@ html, body {
 
 /* INPUT */
 .lookup-input {
+  color: #fff;
   width: 100%;
   padding: 0.85rem 1rem;
   border-radius: 0.6rem;
@@ -325,3 +326,4 @@ html, body {
     padding: 1.3rem 0.9rem;
   }
 }
+
