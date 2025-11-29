@@ -1,7 +1,3 @@
-// ==============================
-// NEWS LIST PAGE (100% NO-CACHE)
-// ==============================
-
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 export const fetchCache = "force-no-store";
@@ -13,16 +9,23 @@ import NewsCard from "@/app/components/NewsCard";
 import "./assets/styles.css";
 
 export default async function NewsPage({ searchParams }) {
-  const category = searchParams?.cat || "all";
-
   await connectDB();
 
+  // Get category from URL
+  const rawCat = searchParams?.cat || "all";
+
+  // Normalize category (same as DB format)
+  const category = rawCat.toLowerCase().trim().replace(/\s+/g, "-");
+
+  // Apply filter
   const filter = category !== "all" ? { category } : {};
 
+  // Get posts
   const newsList = await News.find(filter)
     .sort({ _id: -1 })
     .lean();
 
+  // Get available categories
   const categories = await News.distinct("category");
 
   return (
@@ -47,4 +50,4 @@ export default async function NewsPage({ searchParams }) {
       </div>
     </div>
   );
-          }
+}
