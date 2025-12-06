@@ -1,0 +1,225 @@
+:root {
+  --bg: linear-gradient(180deg,#071013 0%, #061116 100%);
+  --panel: rgba(6,10,12,0.48);
+  --glass: rgba(255,255,255,0.03);
+  --accent: #14B866;
+  --text: #e9f6ee;
+  --muted: #9bb7a8;
+}
+
+body.light {
+  --bg: #f6f7f9;
+  --panel: #fff;
+  --glass: rgba(0,0,0,0.04);
+  --text: #111;
+  --muted: #666;
+}
+
+/* wrapper + container */
+.news-wrapper {
+  padding: 36px 14px;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.container {
+  max-width: fit-content;
+  margin: 0 auto;
+}
+
+.top-row {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.page-heading {
+  font-size: 28px;
+  margin: 0;
+  font-weight: 700;
+}
+
+.filter-wrap {
+  display: flex;
+  align-items: center;
+}
+
+/* grid */
+.news-grid {
+  display: grid;
+  justify-content: center;
+  gap: 16px;
+
+  /* ⭐ ADD: FIX FOR PROPER LAYOUT */
+  grid-template-columns: repeat(4, 1fr);
+}
+
+
+/* card */
+.news-card {
+  background: var(--panel);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--glass);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  display: flex;
+  flex-direction: column;
+  min-height: 420px;
+  width: 350px;
+}
+
+.big-thumb {
+  width: 100%;
+  height: 220px;
+  background-size: cover;
+  background-position: center;
+}
+
+.news-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1 1 auto;
+}
+
+.news-category {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(20,184,102,0.12);
+  border: 1px solid rgba(20,184,102,0.2);
+  color: var(--accent);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.news-title {
+  font-size: 18px;
+  margin: 10px 8px 8px;
+  line-height: 1.25;
+  color: var(--text);
+  max-height: 2.6em;
+  overflow: hidden;
+}
+
+.news-excerpt {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+  max-height: 4.6em;
+  overflow: hidden;
+}
+
+.news-meta-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.news-user-img {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent);
+}
+
+.author-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.news-user-name {
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.news-time {
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.read-more {
+  background: var(--accent);
+  color: #ffffff;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+}
+.read-more:hover {
+  color: #ddf3d3;
+  padding: 9px 15px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 12px;
+}
+.meta-row-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 28px 0;
+}
+
+/* NewsFilter */
+.news-filter-select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--glass);
+  background: rgba(255,255,255,0.02);
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* responsive */
+
+
+/* ⭐ ADD: RESPONSIVE GRID FIXES */
+@media (max-width: 1456px) {
+  .news-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 1120px) {
+  .top-row { flex-direction: column; align-items: stretch; gap: 12px; }
+  .big-thumb { height: 180px;  }
+  .page-heading { font-size: 20px; }
+  .read-more{ font-size: 10px; }
+  .news-card{ margin-bottom: 20px; }
+  .news-grid {
+    grid-template-columns:repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 892px) {
+  .news-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+/* small cosmetic */
+.news-card:focus-within, .news-card:hover { 
+  box-shadow: 0 18px 50px rgba(0,0,0,0.45); 
+  transform: translateY(-4px); 
+}
+
+
+/* Scoped fixes for list page to avoid detail-page conflicts */
+.news-list-page .news-card .news-title { font-size: 18px; }
+.news-list-page .news-card .news-excerpt { font-size: 14px; }
